@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Day in Drops — Your Water Footprint at Home</title>
+  <meta name="description" content="An interactive, animated look at how much water the average American uses at home — the 80–100 gallon-a-day range, fixture by fixture. Built from USGS and Water Education Foundation data.">
+
+  <meta property="og:title" content="A Day in Drops — Your Water Footprint at Home">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="How much water do you really use? An interactive HTML5 + SVG breakdown of indoor water use, fixture by fixture.">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#061821">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,800;9..144,900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #061821;
+    --ink-2: #0a2632;
+    --ink-3: #0f3343;
+    --aqua: #5eead4;
+    --aqua-bright: #22d3ee;
+    --mint: #86efac;
+    --amber: #fbbf24;
+    --coral: #fb7185;
+    --cream: #f5f3e7;
+    --slate: #9fbac6;
+    --muted: #6b94a3;
+    --border: rgba(94, 234, 212, 0.15);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--ink);
+    color: var(--cream);
+    margin: 0;
+    overflow-x: hidden;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .display { font-family: 'Fraunces', serif; }
+  a { color: inherit; text-decoration: none; }
+  em { font-style: italic; }
+
+  /* ---------- Layout helpers ---------- */
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .px { padding-left: 1.5rem; padding-right: 1.5rem; }
+  @media (min-width: 768px) { .px { padding-left: 2.5rem; padding-right: 2.5rem; } }
+  .section-pad { padding-top: 6rem; padding-bottom: 6rem; }
+  @media (min-width: 768px) { .section-pad { padding-top: 8rem; padding-bottom: 8rem; } }
+  .grid { display: grid; }
+  .gap-10 { gap: 2.5rem; }
+  .text-center { text-align: center; }
+  .relative { position: relative; }
+  .muted { color: var(--slate); }
+  .dim { color: var(--muted); }
+
+  /* ---------- Backgrounds ---------- */
+  .bg-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 72% 0%, rgba(34, 211, 238, 0.18), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 8% 100%, rgba(94, 234, 212, 0.12), transparent 60%),
+      linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  }
+  .bg-2 { background: linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%); }
+
+  /* ---------- Typography ---------- */
+  .eyebrow {
+    letter-spacing: 0.35em; text-transform: uppercase;
+    font-size: 0.7rem; color: var(--aqua); font-weight: 600;
+  }
+  h1.hero-title {
+    font-family: 'Fraunces', serif; font-weight: 800;
+    font-size: clamp(2.8rem, 8vw, 5.4rem); line-height: 0.97;
+    letter-spacing: -0.02em; margin: 0;
+  }
+  h2.section-title {
+    font-family: 'Fraunces', serif; font-weight: 800;
+    font-size: clamp(2.2rem, 5.5vw, 3.6rem); line-height: 1.04;
+    letter-spacing: -0.01em; margin: 0;
+  }
+  .lead { font-size: clamp(1rem, 2.2vw, 1.18rem); color: var(--slate); }
+
+  /* ---------- Nav ---------- */
+  nav.topnav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: rgba(6, 24, 33, 0.55);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0; }
+  .nav-links { display: none; gap: 2rem; font-size: 0.9rem; font-weight: 500; }
+  .nav-links a { color: var(--slate); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cream); }
+  @media (min-width: 820px) { .nav-links { display: flex; } }
+  .brand { display: flex; align-items: center; gap: 0.6rem; }
+  .brand span { font-family: 'Fraunces', serif; font-weight: 800; font-size: 1.25rem; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-block; padding: 0.85rem 1.7rem; border-radius: 999px;
+    font-weight: 600; font-size: 0.95rem; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--aqua); color: var(--ink); box-shadow: 0 8px 30px rgba(94,234,212,0.25); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(94,234,212,0.4); }
+  .btn-ghost { border-color: var(--border); color: var(--cream); background: rgba(255,255,255,0.02); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+
+  /* ---------- Glass ---------- */
+  .glass {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* ---------- Falling drops ---------- */
+  #drops { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .drop {
+    position: absolute; top: -8%;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: linear-gradient(180deg, rgba(94,234,212,0.9), rgba(34,211,238,0.5));
+    filter: blur(0.3px);
+    animation-name: fall; animation-timing-function: linear; animation-iteration-count: infinite;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-12vh) translateX(0) scale(0.9); opacity: 0; }
+    8%   { opacity: 0.8; }
+    92%  { opacity: 0.8; }
+    100% { transform: translateY(112vh) translateX(24px) scale(1.05); opacity: 0; }
+  }
+
+  /* ---------- Bubble keyframe ---------- */
+  @keyframes bubbleUp {
+    0%   { transform: translateY(0); opacity: 0; }
+    18%  { opacity: 0.65; }
+    82%  { opacity: 0.5; }
+    100% { transform: translateY(var(--rise, -260px)); opacity: 0; }
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(.2,.7,.2,1), transform 0.8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ---------- Stat chips (hero) ---------- */
+  .stat-row { display: flex; flex-wrap: wrap; gap: 2.2rem; margin-top: 3rem; }
+  .stat-num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 2rem; line-height: 1; }
+  .stat-cap { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-top: 0.4rem; }
+
+  /* ---------- Breakdown rows ---------- */
+  .b-row {
+    display: flex; align-items: center; gap: 1.25rem;
+    padding: 1.25rem 1.4rem;
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+  }
+  .b-row:hover { transform: translateX(6px); border-color: rgba(94,234,212,0.4); background: rgba(255,255,255,0.04); }
+  .b-icon {
+    width: 54px; height: 54px; border-radius: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(94,234,212,0.06); border: 1px solid var(--border);
+  }
+  .b-icon svg { width: 30px; height: 30px; }
+  .b-main { flex: 1; min-width: 0; }
+  .b-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .b-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; }
+  .b-pct { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .b-val { font-family: 'Fraunces', serif; font-weight: 800; font-size: 1.35rem; white-space: nowrap; }
+  .b-unit { font-size: 0.7rem; color: var(--muted); text-align: right; }
+
+  .range-track {
+    position: relative; height: 14px; margin-top: 1.1rem;
+    background: rgba(255,255,255,0.05); border-radius: 999px;
+  }
+  .grid-line { position: absolute; top: -3px; bottom: -3px; width: 1px; background: rgba(255,255,255,0.08); }
+  .range-base {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+    border-radius: 999px; opacity: 0.20;
+    transition: width 1.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .range-band {
+    position: absolute; top: 0; bottom: 0; left: 0; width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--mint), var(--amber));
+    box-shadow: 0 0 16px rgba(251,191,36,0.25);
+    transition: width 1.4s cubic-bezier(.2,.7,.2,1) 0.15s, left 1.4s cubic-bezier(.2,.7,.2,1) 0.15s;
+  }
+  .range-avg {
+    position: absolute; top: 50%; left: 0; width: 12px; height: 12px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: var(--cream); border: 1.5px solid var(--ink-2); border-radius: 2px;
+    box-shadow: 0 0 9px rgba(245,243,231,0.55); opacity: 0; z-index: 2;
+    transition: left 1.3s cubic-bezier(.2,.7,.2,1) 0.2s, opacity 0.5s 0.7s;
+  }
+  .b-row.visible .range-avg { opacity: 1; }
+  .b-scale { display: flex; justify-content: space-between; margin-top: 0.55rem; font-size: 0.68rem; }
+  .b-scale .lo { color: var(--mint); }
+  .b-scale .hi { color: var(--amber); }
+  .b-desc { font-size: 0.85rem; color: var(--slate); margin-top: 0.7rem; max-width: 64ch; }
+  .b-cites { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; margin-top: 0.6rem; }
+  .b-cite {
+    display: inline-block; font-size: 0.72rem; font-weight: 500;
+    color: var(--aqua); opacity: 0.78; border-bottom: 1px solid transparent;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+  .b-cite:hover { opacity: 1; border-color: var(--aqua); }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--border); }
+  .src-link { display: block; padding: 0.9rem 1rem; border-radius: 12px; transition: transform 0.25s, background 0.25s; }
+  .src-link:hover { transform: translateX(5px); background: rgba(255,255,255,0.05); }
+  .src-title { font-weight: 600; color: var(--aqua); }
+  .src-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+
+  /* ---------- Outdoor stat tiles ---------- */
+  .ostat-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 920px; margin: 0 auto; }
+  @media (min-width: 720px) { .ostat-grid { grid-template-columns: repeat(3, 1fr); } }
+  .ostat { padding: 1.7rem 1.3rem; text-align: center; transition: transform 0.3s, border-color 0.3s; }
+  .ostat:hover { transform: translateY(-5px); border-color: rgba(94,234,212,0.3); }
+  .ostat-num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 2rem; line-height: 1; }
+  .ostat-cap { font-size: 0.8rem; color: var(--slate); margin-top: 0.6rem; line-height: 1.45; }
+
+  /* ---------- Food cards (virtual water) ---------- */
+  .food-grid { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
+  @media (min-width: 640px) { .food-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .food-grid { grid-template-columns: repeat(3, 1fr); } }
+  .food-card { padding: 1.5rem; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
+  .food-card:hover { transform: translateY(-6px); border-color: rgba(251,191,36,0.4); box-shadow: 0 18px 50px rgba(0,0,0,0.35); }
+  .food-emoji { font-size: 2.2rem; line-height: 1; }
+  .food-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin: 0.6rem 0 0.1rem; }
+  .food-gal { font-family: 'Fraunces', serif; font-weight: 800; font-size: 2.7rem; line-height: 1; color: var(--amber); }
+  .food-gal small { font-size: 0.32em; font-weight: 400; color: var(--muted); margin-left: 0.3em; }
+  .food-liters { font-size: 0.76rem; color: var(--muted); margin-top: 0.2rem; }
+  .food-bar-track { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.06); margin: 1rem 0 0.55rem; overflow: hidden; }
+  .food-bar { height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--amber), var(--coral)); transition: width 1.2s cubic-bezier(.2,.7,.2,1); }
+  .food-eq { font-size: 0.82rem; color: var(--aqua); font-weight: 600; }
+  .food-why { font-size: 0.82rem; color: var(--slate); margin-top: 0.7rem; line-height: 1.5; }
+  .food-perkg { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; }
+  .food-note { font-size: 0.71rem; color: var(--muted); font-style: italic; margin-top: 0.5rem; line-height: 1.45; }
+  .food-cites { display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; margin-top: 0.6rem; }
+
+  /* ---------- Bridge equation (food → showers → days) ---------- */
+  .bridge {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 0.6rem 1.6rem; padding: 1.9rem 1.5rem; margin: 0 auto; max-width: 880px;
+    border-color: rgba(251,191,36,0.32);
+    background: linear-gradient(140deg, rgba(251,191,36,0.10), rgba(251,113,133,0.05));
+    text-align: center;
+  }
+  .bridge-cell { min-width: 128px; }
+  .bridge-emoji { font-size: 2rem; line-height: 1; }
+  .bridge-big { font-family: 'Fraunces', serif; font-weight: 800; font-size: 1.5rem; margin-top: 0.3rem; }
+  .bridge-sub { font-size: 0.74rem; color: var(--muted); margin-top: 0.25rem; }
+  .bridge-eq { font-family: 'Fraunces', serif; font-size: 1.7rem; color: var(--amber); font-weight: 700; }
+
+  /* ---------- Icon animations ---------- */
+  .stream { stroke-dasharray: 6 9; animation: flow 0.7s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -15; } }
+  .drum-spin { transform-box: fill-box; transform-origin: center; animation: spin 6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .drip-drop { transform-box: fill-box; transform-origin: center; animation: drip 2.4s cubic-bezier(.5,0,.9,.6) infinite; }
+  @keyframes drip {
+    0%   { transform: translateY(0) scaleY(0.6); opacity: 0; }
+    10%  { opacity: 1; }
+    70%  { transform: translateY(20px) scaleY(1.2); opacity: 1; }
+    78%  { transform: translateY(24px) scaleY(0.4); opacity: 0.5; }
+    100% { transform: translateY(24px) scaleY(0.2); opacity: 0; }
+  }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.2s !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="topnav">
+  <div class="wrap px nav-inner">
+    <div class="brand">
+      <svg width="26" height="30" viewBox="0 0 24 28" aria-hidden="true">
+        <path d="M12 1 C12 1 4 11 4 17 A 8 8 0 0 0 20 17 C20 11 12 1 12 1 Z" fill="url(#brandGrad)"/>
+        <defs><linearGradient id="brandGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#5eead4"/>
+        </linearGradient></defs>
+      </svg>
+      <span>Drops</span>
+    </div>
+    <div class="nav-links">
+      <a href="#breakdown">Everyday</a>
+      <a href="#outdoors">Outdoors</a>
+      <a href="#food">Hidden Water</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="bg-hero relative" style="min-height:100vh; display:flex; align-items:center; padding-top:5rem; overflow:hidden;">
+  <div id="drops"></div>
+  <div class="wrap px relative" style="z-index:2; width:100%;">
+    <div class="grid gap-10" style="grid-template-columns:1fr; align-items:center;" id="heroGrid">
+      <div>
+        <div class="eyebrow" style="margin-bottom:1.4rem;">A Day in Drops</div>
+        <h1 class="hero-title">
+          How much <span style="color:var(--aqua)">water</span><br>
+          do you <em style="color:var(--amber)">really</em> use?
+        </h1>
+        <p class="lead" style="margin-top:1.8rem; max-width:34rem;">
+          The average American pours between
+          <strong style="color:var(--mint)">80</strong> and
+          <strong style="color:var(--coral)">100 gallons</strong>
+          down the drain at home <em>every single day</em>. Almost all of it
+          vanishes through a handful of familiar fixtures.
+        </p>
+        <div style="margin-top:2.4rem; display:flex; flex-wrap:wrap; gap:0.8rem;">
+          <a href="#breakdown" class="btn btn-primary">See the breakdown</a>
+          <a href="#food" class="btn btn-ghost">The water in your food</a>
+        </div>
+        <div class="stat-row">
+          <div>
+            <div class="stat-num"><span id="heroCount">90</span></div>
+            <div class="stat-cap">gallons / person / day</div>
+          </div>
+          <div>
+            <div class="stat-num" style="color:var(--aqua)">5</div>
+            <div class="stat-cap">fixtures, most of the total</div>
+          </div>
+          <div>
+            <div class="stat-num" style="color:var(--mint)">50%+</div>
+            <div class="stat-cap">savable with efficient gear</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero water beaker -->
+      <div style="display:flex; justify-content:center;">
+        <svg viewBox="0 0 320 440" style="width:100%; max-width:320px;" aria-label="A measuring beaker filling with water">
+          <defs>
+            <linearGradient id="heroWater" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(94,234,212,0.85)"/>
+              <stop offset="100%" stop-color="rgba(34,211,238,0.95)"/>
+            </linearGradient>
+            <linearGradient id="heroGlass" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(94,234,212,0.25)"/>
+              <stop offset="50%" stop-color="rgba(94,234,212,0.04)"/>
+              <stop offset="100%" stop-color="rgba(94,234,212,0.22)"/>
+            </linearGradient>
+            <clipPath id="heroClip">
+              <path d="M70 40 L250 40 L238 380 Q236 400 216 400 L104 400 Q84 400 82 380 Z"/>
+            </clipPath>
+          </defs>
+
+          <!-- glass body -->
+          <path d="M70 40 L250 40 L238 380 Q236 400 216 400 L104 400 Q84 400 82 380 Z"
+                fill="url(#heroGlass)" stroke="rgba(94,234,212,0.5)" stroke-width="2.5"/>
+          <!-- rim -->
+          <ellipse cx="160" cy="40" rx="90" ry="11" fill="rgba(94,234,212,0.12)" stroke="rgba(94,234,212,0.6)" stroke-width="2.5"/>
+
+          <!-- water -->
+          <g clip-path="url(#heroClip)">
+            <rect id="heroWaterRect" x="60" y="150" width="200" height="260" fill="url(#heroWater)"/>
+            <g id="heroWaveGroup" transform="translate(0,150)">
+              <path fill="rgba(94,234,212,0.55)"
+                d="M50 0 Q90 -9 130 0 T210 0 T290 0 L290 14 L50 14 Z">
+                <animate attributeName="d" dur="4s" repeatCount="indefinite"
+                  values="M50 0 Q90 -9 130 0 T210 0 T290 0 L290 14 L50 14 Z;
+                          M50 0 Q90 9 130 0 T210 0 T290 0 L290 14 L50 14 Z;
+                          M50 0 Q90 -9 130 0 T210 0 T290 0 L290 14 L50 14 Z"/>
+              </path>
+            </g>
+            <g id="heroBubbles"></g>
+          </g>
+
+          <!-- graduations -->
+          <g stroke="rgba(255,255,255,0.25)" stroke-width="1.5">
+            <line x1="232" y1="120" x2="248" y2="120"/>
+            <line x1="228" y1="195" x2="244" y2="195"/>
+            <line x1="224" y1="270" x2="240" y2="270"/>
+            <line x1="220" y1="345" x2="236" y2="345"/>
+          </g>
+          <g font-family="Outfit" font-size="11" fill="rgba(255,255,255,0.45)">
+            <text x="186" y="124">100</text>
+            <text x="190" y="199">75</text>
+            <text x="194" y="274">50</text>
+            <text x="198" y="349">25</text>
+          </g>
+
+          <!-- shine -->
+          <path d="M92 60 L100 360" stroke="rgba(255,255,255,0.18)" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- wave divider -->
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="position:absolute; bottom:-1px; left:0; width:100%; height:80px;">
+    <path fill="#0a2632" d="M0 50 C 240 10 480 90 720 55 C 960 20 1200 80 1440 45 L1440 90 L0 90 Z">
+      <animate attributeName="d" dur="9s" repeatCount="indefinite"
+        values="M0 50 C 240 10 480 90 720 55 C 960 20 1200 80 1440 45 L1440 90 L0 90 Z;
+                M0 55 C 240 90 480 20 720 60 C 960 95 1200 25 1440 60 L1440 90 L0 90 Z;
+                M0 50 C 240 10 480 90 720 55 C 960 20 1200 80 1440 45 L1440 90 L0 90 Z"/>
+    </path>
+  </svg>
+</header>
+
+<!-- ============ BREAKDOWN ============ -->
+<section id="breakdown" class="bg-2 section-pad px">
+  <div class="wrap">
+    <div class="reveal text-center" style="margin-bottom:3rem;">
+      <div class="eyebrow" style="margin-bottom:1rem;">Where it goes</div>
+      <h2 class="section-title">Everyday water,<br><span style="color:var(--aqua)">by the gallon</span></h2>
+      <p class="lead" style="margin:1.4rem auto 0; max-width:44rem;">
+        Each bar is a <em>single use</em> of that fixture, measured the same way so they compare
+        directly. The band runs from an <span style="color:var(--mint)">efficient</span> setup to a
+        <span style="color:var(--amber)">wasteful</span> one; the diamond marks the
+        <span style="color:var(--cream)">measured U.S. average</span>. Sources are cited per row.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:1.3rem; justify-content:center; margin-top:1.5rem; font-size:0.76rem; color:var(--muted);">
+        <span style="display:inline-flex; align-items:center; gap:0.5rem;">
+          <span style="width:34px; height:8px; border-radius:999px; background:linear-gradient(90deg,var(--mint),var(--amber)); display:inline-block;"></span>
+          efficient → wasteful fixture
+        </span>
+        <span style="display:inline-flex; align-items:center; gap:0.5rem;">
+          <span style="width:11px; height:11px; transform:rotate(45deg); background:var(--cream); display:inline-block; border-radius:2px;"></span>
+          measured U.S. average (REU2016, where available)
+        </span>
+        <span>One shared scale · 0–42 gal per use</span>
+      </div>
+    </div>
+    <div id="breakdownList" style="display:flex; flex-direction:column; gap:0.9rem;"></div>
+    <p class="reveal text-center dim" style="margin-top:2.5rem; font-size:0.85rem; max-width:64rem; margin-left:auto; margin-right:auto;">
+      Indoor-use shares and the measured per-use averages come from the Water Research Foundation's
+      <em>Residential End Uses of Water, Version 2</em> (2016) — the most rigorous U.S. household metering study —
+      with efficient/standard fixture rates from EPA WaterSense and ENERGY STAR. That study measured indoor use at
+      <strong style="color:var(--slate)">52.1 gallons per person per day</strong>, below the older 80–100 estimate as efficient fixtures spread.
+    </p>
+  </div>
+</section>
+
+<!-- ============ OUTDOORS ============ -->
+<section id="outdoors" class="bg-3 section-pad px">
+  <div class="wrap text-center">
+    <div class="reveal" style="margin-bottom:2.5rem;">
+      <div class="eyebrow" style="margin-bottom:1rem;">Step outside</div>
+      <h2 class="section-title">Outdoors, the meter <span style="color:var(--amber)">spins</span></h2>
+      <p class="lead" style="margin:1.4rem auto 0; max-width:42rem;">
+        Indoors you count gallons; outdoors you count hundreds. Nearly a third of a U.S. household's
+        water is used outside — and up to half of it never reaches the plant.
+      </p>
+    </div>
+    <div class="ostat-grid reveal">
+      <div class="glass ostat">
+        <div class="ostat-num" style="color:var(--aqua)">9 billion gal</div>
+        <div class="ostat-cap">used outdoors by U.S. homes every day — about 30% of all household water</div>
+      </div>
+      <div class="glass ostat">
+        <div class="ostat-num" style="color:var(--amber)">up to 50%</div>
+        <div class="ostat-cap">of outdoor water lost to wind, evaporation and runoff</div>
+      </div>
+      <div class="glass ostat">
+        <div class="ostat-num" style="color:var(--coral)">25,000 gal</div>
+        <div class="ostat-cap">wasted per year by a single poorly-tuned irrigation system</div>
+      </div>
+    </div>
+    <p class="reveal muted" style="margin-top:1.6rem; font-size:0.9rem;">
+      A garden hose runs 9–17 gallons a minute — ten minutes can out-pour a low-flow shower.
+    </p>
+    <div class="reveal b-cites" style="justify-content:center; margin-top:0.8rem;">
+      <a class="b-cite" href="https://www.epa.gov/watersense/statistics-and-facts" target="_blank" rel="noopener">EPA WaterSense · Statistics &amp; Facts ↗</a>
+      <a class="b-cite" href="https://www.dripworks.com/blog/garden-hose-flow-rates" target="_blank" rel="noopener">Garden hose flow-rate data ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HIDDEN WATER IN FOOD ============ -->
+<section id="food" class="bg-4 section-pad px">
+  <div class="wrap">
+    <div class="reveal text-center" style="margin-bottom:3rem;">
+      <div class="eyebrow" style="margin-bottom:1rem;">The water you can't see</div>
+      <h2 class="section-title">The thirstiest thing<br>you do is <span style="color:var(--amber)">eat</span></h2>
+      <p class="lead" style="margin:1.4rem auto 0; max-width:44rem;">
+        A flush or a shower is gallons. The food on your plate is <em>hundreds</em> — "virtual water"
+        hidden in growing, feeding and processing. Each card is one ordinary serving, shown next to its
+        equivalent in <span style="color:var(--aqua)">15.8-gallon showers</span>.
+      </p>
+    </div>
+    <div class="food-grid" id="foodGrid"></div>
+
+    <div class="reveal" style="margin-top:2.6rem;">
+      <div class="bridge glass">
+        <div class="bridge-cell">
+          <div class="bridge-emoji">🍔</div>
+          <div class="bridge-big">1 burger</div>
+          <div class="bridge-sub">≈ 630 gallons hidden</div>
+        </div>
+        <div class="bridge-eq">=</div>
+        <div class="bridge-cell">
+          <div class="bridge-emoji">🚿</div>
+          <div class="bridge-big">40 showers</div>
+          <div class="bridge-sub">at 15.8 gallons each</div>
+        </div>
+        <div class="bridge-eq">=</div>
+        <div class="bridge-cell">
+          <div class="bridge-emoji">📅</div>
+          <div class="bridge-big">~12 days</div>
+          <div class="bridge-sub">of one person's indoor water</div>
+        </div>
+      </div>
+      <p class="text-center dim" style="font-size:0.76rem; margin-top:0.9rem;">
+        Based on a 15.8-gallon average shower and 52.1 gallons of indoor use per person per day
+        (Water Research Foundation, REU2016).
+      </p>
+    </div>
+
+    <p class="reveal text-center dim" style="margin-top:2.5rem; font-size:0.85rem; max-width:64rem; margin-left:auto; margin-right:auto;">
+      Per-serving figures are the total (green + blue + grey) water footprint, drawn from the
+      <strong style="color:var(--slate)">Water Footprint Network</strong> and the peer-reviewed studies of
+      <strong style="color:var(--slate)">Mekonnen &amp; Hoekstra (2011, 2012)</strong>. These are typical global averages;
+      real footprints vary widely with where and how the food is grown.
+    </p>
+  </div>
+</section>
+
+<!-- ============ FOOTER / SOURCES ============ -->
+<footer id="sources" class="bg-2 px" style="padding-top:5rem; padding-bottom:3rem;">
+  <div class="wrap">
+    <div class="grid gap-10" style="grid-template-columns:1fr;" id="footGrid">
+      <div>
+        <div class="brand" style="margin-bottom:1rem;">
+          <svg width="26" height="30" viewBox="0 0 24 28" aria-hidden="true">
+            <path d="M12 1 C12 1 4 11 4 17 A 8 8 0 0 0 20 17 C20 11 12 1 12 1 Z" fill="#22d3ee"/>
+          </svg>
+          <span>A Day in Drops</span>
+        </div>
+        <p class="muted" style="font-size:0.9rem; max-width:34rem;">
+          A visual look at indoor household water use in the United States. Every figure here is
+          drawn from public data — the ranges reflect typical values, not any single home. Explore
+          the original sources for the full picture.
+        </p>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:1rem;">Sources</div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+          <a class="src-link glass" href="https://allianceforwaterefficiency.org/resource/residential-end-uses-water-study-1999-and-2016/" target="_blank" rel="noopener">
+            <div class="src-title">Water Research Foundation — REU2016</div>
+            <div class="src-sub">Residential End Uses of Water v2: measured per-use volumes</div>
+          </a>
+          <a class="src-link glass" href="https://water.usgs.gov/edu/activity-percapita.php" target="_blank" rel="noopener">
+            <div class="src-title">USGS Water Science School</div>
+            <div class="src-sub">Per-capita water use &amp; fixture shares</div>
+          </a>
+          <a class="src-link glass" href="https://www.watereducation.org/post/close-and-personal-water-use-home" target="_blank" rel="noopener">
+            <div class="src-title">Water Education Foundation</div>
+            <div class="src-sub">Close &amp; personal: water use at home</div>
+          </a>
+          <a class="src-link glass" href="https://www.epa.gov/watersense" target="_blank" rel="noopener">
+            <div class="src-title">EPA WaterSense</div>
+            <div class="src-sub">Fixture rates &amp; outdoor use: toilets, showers, faucets, irrigation</div>
+          </a>
+          <a class="src-link glass" href="https://www.energystar.gov/products" target="_blank" rel="noopener">
+            <div class="src-title">ENERGY STAR</div>
+            <div class="src-sub">Per-cycle use: clothes washers &amp; dishwashers</div>
+          </a>
+          <a class="src-link glass" href="https://www.waterfootprint.org/resources/interactive-tools/product-gallery/" target="_blank" rel="noopener">
+            <div class="src-title">Water Footprint Network</div>
+            <div class="src-sub">Virtual water in food, per product</div>
+          </a>
+          <a class="src-link glass" href="https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf" target="_blank" rel="noopener">
+            <div class="src-title">Mekonnen &amp; Hoekstra (2011, 2012)</div>
+            <div class="src-sub">Peer-reviewed water footprints of crops &amp; animal products</div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; font-size:0.78rem; color:var(--muted);">
+      <span>Built with HTML5, SVG &amp; CSS animation — no frameworks, no build step.</span>
+      <span>Hover a row to explore the daily ranges.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   ICONS
+   ========================================================= */
+var C = 'currentColor';
+var icons = {
+  toilet: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<rect x="14" y="8" width="36" height="18" rx="3" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.08)"/>' +
+    '<circle cx="44" cy="13" r="2" fill="'+C+'"/>' +
+    '<path d="M16 26 Q16 44 26 50 L38 50 Q48 44 48 26" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.05)"/>' +
+    '<ellipse cx="32" cy="33" rx="13" ry="4" fill="rgba(34,211,238,0.5)"/>' +
+    '<path d="M26 50 L23 58 L41 58 L38 50" stroke="'+C+'" stroke-width="2.4" fill="none"/></svg>',
+  shower: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<path d="M44 6 L44 18 Q44 22 40 24" stroke="'+C+'" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<ellipse cx="30" cy="26" rx="16" ry="5" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.08)"/>' +
+    '<g stroke="'+C+'" stroke-width="2.2" stroke-linecap="round" class="stream">' +
+    '<line x1="22" y1="32" x2="20" y2="54"/><line x1="30" y1="32" x2="30" y2="56"/><line x1="38" y1="32" x2="40" y2="54"/></g></svg>',
+  faucet: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<path d="M14 22 L14 32 L36 32 L36 38" stroke="'+C+'" stroke-width="3" stroke-linecap="round"/>' +
+    '<circle cx="14" cy="18" r="5" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.08)"/>' +
+    '<line x1="36" y1="40" x2="36" y2="54" stroke="'+C+'" stroke-width="2.6" stroke-linecap="round" class="stream"/>' +
+    '<path d="M18 56 Q36 64 54 56" stroke="'+C+'" stroke-width="2.4" fill="none"/></svg>',
+  laundry: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<rect x="12" y="8" width="40" height="48" rx="5" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.05)"/>' +
+    '<line x1="12" y1="18" x2="52" y2="18" stroke="'+C+'" stroke-width="2"/>' +
+    '<circle cx="19" cy="13" r="1.6" fill="'+C+'"/><circle cx="25" cy="13" r="1.6" fill="'+C+'"/>' +
+    '<g class="drum-spin"><circle cx="32" cy="37" r="14" stroke="'+C+'" stroke-width="2.4" fill="none"/>' +
+    '<circle cx="32" cy="27" r="2.4" fill="rgba(34,211,238,0.7)"/><circle cx="42" cy="37" r="2.4" fill="rgba(34,211,238,0.7)"/>' +
+    '<circle cx="32" cy="47" r="2.4" fill="rgba(34,211,238,0.7)"/><circle cx="22" cy="37" r="2.4" fill="rgba(34,211,238,0.7)"/></g></svg>',
+  dishwasher: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<rect x="12" y="8" width="40" height="48" rx="4" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.05)"/>' +
+    '<line x1="12" y1="18" x2="52" y2="18" stroke="'+C+'" stroke-width="2"/>' +
+    '<rect x="36" y="11" width="12" height="4" rx="2" fill="rgba(94,234,212,0.4)"/>' +
+    '<rect x="18" y="24" width="28" height="12" rx="2" stroke="rgba(34,211,238,0.5)" stroke-width="1.6"/>' +
+    '<rect x="18" y="40" width="28" height="10" rx="2" stroke="rgba(34,211,238,0.5)" stroke-width="1.6"/>' +
+    '<ellipse cx="32" cy="30" rx="2.4" ry="3" fill="rgba(34,211,238,0.6)" class="drip-drop"/></svg>',
+  teeth: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<rect x="28" y="16" width="8" height="34" rx="4" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.06)"/>' +
+    '<rect x="23" y="8" width="18" height="10" rx="3" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.1)"/>' +
+    '<g stroke="'+C+'" stroke-width="2" stroke-linecap="round"><line x1="27" y1="8" x2="27" y2="3"/><line x1="32" y1="8" x2="32" y2="2"/><line x1="37" y1="8" x2="37" y2="3"/></g>' +
+    '<ellipse cx="44" cy="42" rx="3" ry="4" fill="rgba(34,211,238,0.7)" class="drip-drop"/></svg>',
+  handwash: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<circle cx="32" cy="36" r="19" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.06)"/>' +
+    '<circle cx="32" cy="36" r="11" stroke="rgba(34,211,238,0.4)" stroke-width="1.6" fill="none"/>' +
+    '<circle cx="23" cy="20" r="3" fill="rgba(255,255,255,0.5)"/><circle cx="33" cy="15" r="2.4" fill="rgba(255,255,255,0.45)"/><circle cx="41" cy="21" r="2" fill="rgba(255,255,255,0.4)"/>' +
+    '<g class="stream" stroke="rgba(34,211,238,0.7)" stroke-width="2" stroke-linecap="round"><line x1="32" y1="3" x2="32" y2="12"/></g></svg>',
+  bath: '<svg viewBox="0 0 64 64" fill="none">' +
+    '<path d="M8 32 L8 40 Q8 50 18 50 L46 50 Q56 50 56 40 L56 32 Z" stroke="'+C+'" stroke-width="2.4" fill="rgba(94,234,212,0.06)"/>' +
+    '<line x1="5" y1="32" x2="59" y2="32" stroke="'+C+'" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<path d="M17 50 L15 57 M47 50 L49 57" stroke="'+C+'" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<path d="M20 32 L20 22 Q20 17 25 17 L28 17" stroke="'+C+'" stroke-width="2.4" fill="none" stroke-linecap="round"/>' +
+    '<g class="stream" stroke="rgba(34,211,238,0.75)" stroke-width="2" stroke-linecap="round"><line x1="28" y1="19" x2="28" y2="30"/></g>' +
+    '<ellipse cx="34" cy="42" rx="15" ry="3" fill="rgba(34,211,238,0.4)"/></svg>'
+};
+
+/* =========================================================
+   DATA — gallons per single use, one shared scale.
+   low/high  = efficient -> wasteful fixture (EPA WaterSense / ENERGY STAR)
+   avg       = measured U.S. average per event (WRF REU2016)
+   Ordered smallest -> largest average so the ramp reads cleanly.
+   ========================================================= */
+var SCALE_MAX = 42;            // gal — shared axis maximum for every bar
+var GRID = [10, 20, 30, 40];   // gal — shared gridlines drawn in every bar
+var WRF = { s:'WRF · Residential End Uses of Water (2016)', h:'https://allianceforwaterefficiency.org/resource/residential-end-uses-water-study-1999-and-2016/' };
+
+var activities = [
+  { id:'faucet', name:'Faucet', basis:'per use', pct:'~19% of indoor use', color:'#86efac',
+    low:0.5, high:1.1, avg:0.5,
+    desc:'One faucet use averages just half a gallon — roughly 30 seconds of flow — but homes open a faucet 50+ times a day. A WaterSense aerator (1.5 gpm) beats the 2.2 gpm standard.',
+    cites:[ WRF, { s:'EPA WaterSense · Bathroom Faucets', h:'https://www.epa.gov/watersense/bathroom-faucets' } ] },
+  { id:'teeth', name:'Brushing teeth', basis:'per brushing', pct:'part of faucet use', color:'#5eead4',
+    low:0.25, high:4,
+    desc:'Wet the brush and turn the tap off, and a brushing uses about a quarter-gallon. Leave it running and the same two minutes pours roughly 4 gallons — close to 8 a day.',
+    cites:[ { s:'EPA WaterSense · Start Saving', h:'https://www.epa.gov/watersense/start-saving' } ] },
+  { id:'toilet', name:'Toilet', basis:'per flush', pct:'~24% of indoor use', color:'#5eead4',
+    low:1.28, high:6, avg:2.6,
+    desc:'A WaterSense toilet uses 1.28 gallons per flush versus the 1.6-gallon federal standard, while pre-1994 models reach 6 or more. The measured U.S. average is 2.6 gallons per flush.',
+    cites:[ { s:'EPA WaterSense · Residential Toilets', h:'https://www.epa.gov/watersense/residential-toilets' }, WRF ] },
+  { id:'dishwasher', name:'Dishwasher', basis:'per cycle', pct:'~1–2% of indoor use', color:'#67e8f9',
+    low:3.2, high:10, avg:6.1,
+    desc:'A new ENERGY STAR dishwasher uses 3.2 gallons or less per cycle; older machines averaged 10. Today’s measured average is 6.1 gallons — usually less than washing the same load by hand.',
+    cites:[ { s:'ENERGY STAR · Dishwashers', h:'https://www.energystar.gov/products/dishwashers/key_product_criteria' }, WRF ] },
+  { id:'handwash', name:'Dishes by hand', basis:'per wash', pct:'part of faucet use', color:'#86efac',
+    low:4, high:27,
+    desc:'Fill a basin and a hand-wash uses a few gallons; leave the tap running and it climbs fast — about 2 gallons a minute, up to 27 for a full sink of dishes (often more than the dishwasher).',
+    cites:[ { s:'EPA WaterSense · Start Saving', h:'https://www.epa.gov/watersense/start-saving' } ] },
+  { id:'shower', name:'Shower', basis:'per 7.8-min shower', pct:'~20% of indoor use', color:'#22d3ee',
+    low:12, high:20, avg:15.8,
+    desc:'The average U.S. shower runs 7.8 minutes and uses 15.8 gallons. A WaterSense head (2.0 gpm) trims the 2.5 gpm standard, and a 1.5 gpm low-flow head cuts it further.',
+    cites:[ WRF, { s:'EPA WaterSense · Showerheads', h:'https://www.epa.gov/watersense/showerheads' } ] },
+  { id:'bath', name:'Bath', basis:'per bath', pct:'~3% of indoor use', color:'#fbbf24',
+    low:15, high:36, avg:20.2,
+    desc:'A bath averages 20.2 gallons, though a brimming standard tub holds about 36. A short shower almost always beats a bath — only a very long one loses the edge.',
+    cites:[ WRF, { s:'EPA WaterSense · Showerheads', h:'https://www.epa.gov/watersense/showerheads' } ] },
+  { id:'laundry', name:'Washing Machine', basis:'per load', pct:'~17% of indoor use', color:'#fb7185',
+    low:14, high:40, avg:29.3,
+    desc:'An ENERGY STAR washer uses about 14 gallons a load versus 20 for a standard machine, and older top-loaders can top 40. The measured U.S. average is 29.3 gallons per load.',
+    cites:[ { s:'ENERGY STAR · Clothes Washers', h:'https://www.energystar.gov/products/clothes_washers' }, WRF ] }
+];
+function fmtNum(n){ return n >= 1000 ? n.toLocaleString('en-US') : String(n); }
+
+/* =========================================================
+   HERO — falling drops + bubbles + breathing counter
+   ========================================================= */
+function makeDrops(){
+  var c = document.getElementById('drops');
+  for (var i=0;i<26;i++){
+    var d = document.createElement('div');
+    d.className = 'drop';
+    var s = 4 + Math.random()*7;
+    d.style.width = s+'px'; d.style.height = (s*1.4)+'px';
+    d.style.left = (Math.random()*100)+'%';
+    d.style.animationDuration = (4.5 + Math.random()*6)+'s';
+    d.style.animationDelay = (-Math.random()*8)+'s';
+    d.style.opacity = 0.3 + Math.random()*0.45;
+    c.appendChild(d);
+  }
+}
+function svgBubbles(groupId, count, xMin, xMax, yBase){
+  var g = document.getElementById(groupId);
+  for (var i=0;i<count;i++){
+    var b = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    var cx = xMin + Math.random()*(xMax-xMin);
+    var r = 1.5 + Math.random()*3;
+    b.setAttribute('cx', cx.toFixed(1));
+    b.setAttribute('cy', yBase);
+    b.setAttribute('r', r.toFixed(1));
+    b.setAttribute('fill','rgba(255,255,255,0.35)');
+    b.setAttribute('stroke','rgba(255,255,255,0.25)');
+    b.setAttribute('stroke-width','0.5');
+    b.style.setProperty('--rise', '-' + (220 + Math.random()*200) + 'px');
+    b.style.animation = 'bubbleUp ' + (4+Math.random()*5).toFixed(1) + 's ease-in ' + (-Math.random()*6).toFixed(1) + 's infinite';
+    g.appendChild(b);
+  }
+}
+function heroCounter(){
+  var el = document.getElementById('heroCount');
+  var phase = 0;
+  (function tick(){
+    phase += 0.012;
+    el.textContent = Math.round(90 + Math.sin(phase)*10);
+    requestAnimationFrame(tick);
+  })();
+}
+
+/* =========================================================
+   BREAKDOWN
+   ========================================================= */
+function renderBreakdown(){
+  var list = document.getElementById('breakdownList');
+  list.innerHTML = activities.map(function(a){
+    var basePct = (a.high/SCALE_MAX)*100;
+    var bandLeft = (a.low/SCALE_MAX)*100;
+    var bandWidth = ((a.high-a.low)/SCALE_MAX)*100;
+    var hasAvg = (a.avg !== undefined && a.avg !== null);
+    var grid = GRID.map(function(g){ return '<div class="grid-line" style="left:'+((g/SCALE_MAX)*100).toFixed(2)+'%"></div>'; }).join('');
+    var cites = a.cites.map(function(c){ return '<a class="b-cite" href="'+c.h+'" target="_blank" rel="noopener">'+c.s+' ↗</a>'; }).join('');
+    var headline = hasAvg
+      ? fmtNum(a.avg)
+      : fmtNum(a.low)+'<span style="color:var(--muted)">–</span>'+fmtNum(a.high);
+    var avgMarker = hasAvg
+      ? '<div class="range-avg" data-l="'+((a.avg/SCALE_MAX)*100)+'" title="U.S. average (REU2016): '+fmtNum(a.avg)+' gal"></div>'
+      : '';
+    return '' +
+    '<div class="b-row glass" data-id="'+a.id+'">' +
+      '<div class="b-icon" style="color:'+a.color+'">'+icons[a.id]+'</div>' +
+      '<div class="b-main">' +
+        '<div class="b-head">' +
+          '<div><div class="b-name">'+a.name+'</div><div class="b-pct">'+a.pct+'</div></div>' +
+          '<div style="text-align:right">' +
+            '<div class="b-val">'+headline+'<small style="font-size:0.58em; color:var(--muted); font-weight:400; margin-left:0.25em;">gal</small></div>' +
+            '<div class="b-unit">'+(hasAvg?'avg · ':'range · ')+a.basis+'</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="range-track">' +
+          grid +
+          '<div class="range-base" style="background:'+a.color+'" data-w="'+basePct+'"></div>' +
+          '<div class="range-band" data-l="'+bandLeft+'" data-w="'+bandWidth+'"></div>' +
+          avgMarker +
+        '</div>' +
+        '<div class="b-scale"><span class="lo">'+fmtNum(a.low)+' gal · efficient</span><span class="hi">'+fmtNum(a.high)+' gal · wasteful</span></div>' +
+        '<div class="b-desc">'+a.desc+'</div>' +
+        '<div class="b-cites">'+cites+'</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+function animateBreakdownBars(row){
+  row.querySelectorAll('.range-base').forEach(function(el){ el.style.width = el.dataset.w + '%'; });
+  row.querySelectorAll('.range-band').forEach(function(el){ el.style.left = el.dataset.l + '%'; el.style.width = el.dataset.w + '%'; });
+  row.querySelectorAll('.range-avg').forEach(function(el){ el.style.left = el.dataset.l + '%'; });
+}
+
+/* =========================================================
+   FOOD — virtual (hidden) water per common serving
+   gal/liters = total green+blue+grey water footprint
+   ========================================================= */
+var SHOWER_GAL = 15.8;   // REU2016 measured average shower, for the "= N showers" equivalent
+var INDOOR_GPCD = 52.1;  // REU2016 measured indoor use per person per day, for the "= N days" equivalent
+var MH2011 = { s:'Mekonnen & Hoekstra 2011 · Water Footprint of Crops', h:'https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2011-WaterFootprintCrops.pdf' };
+var MH2012 = { s:'Mekonnen & Hoekstra 2012 · Farm Animal Products', h:'https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf' };
+var WFNPG  = { s:'Water Footprint Network · Product Gallery', h:'https://www.waterfootprint.org/resources/interactive-tools/product-gallery/' };
+var WCALC  = { s:'Water Footprint Calculator · Food Guide', h:'https://watercalculator.org/water-footprint-of-food-guide/' };
+
+var foods = [
+  { emoji:'🍔', name:'A beef burger', serving:'≈ 150 g patty', gal:630, liters:2400, perKg:'beef ≈ 15,400 L/kg',
+    why:'Years of water go into the grain, forage and roughage one cow eats over its lifetime.',
+    cites:[ WFNPG, MH2012 ] },
+  { emoji:'🍫', name:'A chocolate bar', serving:'100 g bar', gal:450, liters:1700, perKg:'cocoa ≈ 17,100 L/kg',
+    why:'Thirsty cacao trees, plus water-heavy fermentation and refining of the beans.',
+    cites:[ MH2011, WFNPG ] },
+  { emoji:'🥩', name:'A lamb chop', serving:'≈ 100 g', gal:275, liters:1040, perKg:'mutton ≈ 10,400 L/kg',
+    why:'Like beef, almost all of it is the water needed to grow the animal’s feed.',
+    cites:[ MH2012 ] },
+  { emoji:'🥓', name:'A pork chop', serving:'≈ 150 g', gal:240, liters:900, perKg:'pork ≈ 6,000 L/kg',
+    why:'Pigs eat large quantities of water-intensive feed crops like corn and soy.',
+    cites:[ MH2012 ] },
+  { emoji:'🌰', name:'A handful of almonds', serving:'1 oz · ~23 nuts', gal:90, liters:340, perKg:'tree nuts ≈ 9,000–15,000 L/kg',
+    why:'Nut trees need constant, year-round irrigation, often in drought-prone regions.',
+    note:'You may have seen “1.1 gallons per almond” — that counts irrigation (blue) water only. The figure above is the full green + blue + grey footprint.',
+    cites:[ MH2011, WCALC ] },
+  { emoji:'☕', name:'A cup of coffee', serving:'125 ml · ~7 g beans', gal:34, liters:130, perKg:'beans ≈ 18,900 L/kg',
+    why:'High evaporation in the field and intensive wet-processing of the coffee cherries.',
+    cites:[ WFNPG, MH2011 ] },
+  { emoji:'🧀', name:'A slice of cheese', serving:'≈ 30 g', gal:25, liters:95, perKg:'cheese ≈ 3,178 L/kg',
+    why:'It takes gallons of milk — and the feed and water behind dairy cows — to make each block.',
+    cites:[ MH2012 ] },
+  { emoji:'🧈', name:'A pat of butter', serving:'1 tbsp · 14 g', gal:21, liters:78, perKg:'butter ≈ 5,553 L/kg',
+    why:'Butter is concentrated cream — a single tablespoon distills the milk, and the dairy-cow water, from well over a cup.',
+    cites:[ MH2012 ] }
+];
+
+function renderFoods(){
+  var grid = document.getElementById('foodGrid');
+  var maxGal = Math.max.apply(null, foods.map(function(f){ return f.gal; }));
+  grid.innerHTML = foods.map(function(f){
+    var w = (f.gal / maxGal * 100).toFixed(1);
+    var showers = Math.max(1, Math.round(f.gal / SHOWER_GAL));
+    var days = f.gal / INDOOR_GPCD;
+    var dayStr = days >= 2 ? ' · ≈ ' + Math.round(days) + ' days indoors' : '';
+    var cites = f.cites.map(function(c){ return '<a class="b-cite" href="'+c.h+'" target="_blank" rel="noopener">'+c.s+' ↗</a>'; }).join('');
+    var note = f.note ? '<div class="food-note">'+f.note+'</div>' : '';
+    return '' +
+    '<div class="food-card glass reveal">' +
+      '<div class="food-emoji">'+f.emoji+'</div>' +
+      '<div class="food-name">'+f.name+'</div>' +
+      '<div class="dim" style="font-size:0.74rem;">'+f.serving+'</div>' +
+      '<div class="food-gal" style="margin-top:0.7rem;">'+fmtNum(f.gal)+'<small>gallons</small></div>' +
+      '<div class="food-liters">'+fmtNum(f.liters)+' liters · total water footprint</div>' +
+      '<div class="food-bar-track"><div class="food-bar" data-w="'+w+'"></div></div>' +
+      '<div class="food-eq">≈ '+showers+' shower'+(showers===1?'':'s')+dayStr+'</div>' +
+      '<div class="food-why">'+f.why+'</div>' +
+      '<div class="food-perkg">Basis: '+f.perKg+'</div>' +
+      note +
+      '<div class="food-cites">'+cites+'</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+function setupReveal(){
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      if (e.target.classList.contains('b-row')) animateBreakdownBars(e.target);
+      if (e.target.classList.contains('food-card')) {
+        var fb = e.target.querySelector('.food-bar');
+        if (fb) fb.style.width = fb.dataset.w + '%';
+      }
+      io.unobserve(e.target);
+    });
+  }, { threshold:0.18, rootMargin:'0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  document.querySelectorAll('.b-row').forEach(function(el){ io.observe(el); });
+}
+
+/* =========================================================
+   RESPONSIVE 2-col helper (hero / footer grids)
+   ========================================================= */
+function applyTwoCol(){
+  var two = window.matchMedia('(min-width: 900px)').matches;
+  document.getElementById('heroGrid').style.gridTemplateColumns = two ? '1.15fr 0.85fr' : '1fr';
+  document.getElementById('footGrid').style.gridTemplateColumns = two ? '1.6fr 1fr' : '1fr';
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+window.addEventListener('DOMContentLoaded', function(){
+  makeDrops();
+  heroCounter();
+  svgBubbles('heroBubbles', 9, 95, 225, 392);
+  renderBreakdown();
+  renderFoods();
+  setupReveal();
+  applyTwoCol();
+  window.addEventListener('resize', applyTwoCol);
+});
+</script>
+</body>
+</html>
