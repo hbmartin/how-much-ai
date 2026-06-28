@@ -339,6 +339,11 @@
   .bridge-note { font-size: 0.85rem; color: var(--slate); max-width: 70ch; margin: 1.1rem auto 0; line-height: 1.55; text-align: center; }
   .bridge-note a { color: var(--violet); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
   .bridge-note a:hover { border-color: var(--violet); }
+  /* clickable reference cell in the AI bridge */
+  .ab-pick { position: relative; cursor: pointer; border-radius: 12px; padding: 0.4rem 0.6rem; transition: background 0.2s, box-shadow 0.2s; }
+  .ab-pick:hover { background: rgba(167,139,250,0.10); box-shadow: inset 0 0 0 1px rgba(167,139,250,0.35); }
+  .ab-hint { font-size: 0.62rem; color: var(--violet); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.35rem; opacity: 0.9; }
+  .ab-select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; -webkit-appearance: none; appearance: none; }
 
   /* ---------- Icon animations ---------- */
   .stream { stroke-dasharray: 6 9; animation: flow 0.7s linear infinite; }
@@ -393,31 +398,6 @@
           How much <span style="color:var(--aqua)">water</span><br>
           do you <em style="color:var(--amber)">really</em> use?
         </h1>
-        <p class="lead" style="margin-top:1.8rem; max-width:34rem;">
-          The average American pours between
-          <strong style="color:var(--mint)">80</strong> and
-          <strong style="color:var(--coral)">100 gallons</strong>
-          down the drain at home <em>every single day</em>. Almost all of it
-          vanishes through a handful of familiar fixtures.
-        </p>
-        <div style="margin-top:2.4rem; display:flex; flex-wrap:wrap; gap:0.8rem;">
-          <a href="#breakdown" class="btn btn-primary">Compare every gallon</a>
-          <a href="#sources" class="btn btn-ghost">View the sources</a>
-        </div>
-        <div class="stat-row">
-          <div>
-            <div class="stat-num"><span id="heroCount">90</span></div>
-            <div class="stat-cap">gallons / person / day</div>
-          </div>
-          <div>
-            <div class="stat-num" style="color:var(--aqua)">5</div>
-            <div class="stat-cap">fixtures, most of the total</div>
-          </div>
-          <div>
-            <div class="stat-num" style="color:var(--mint)">50%+</div>
-            <div class="stat-cap">savable with efficient gear</div>
-          </div>
-        </div>
       </div>
 
       <!-- Hero water beaker -->
@@ -494,6 +474,45 @@
 <!-- ============ BREAKDOWN ============ -->
 <section id="breakdown" class="bg-2 section-pad px">
   <div class="wrap">
+
+    <div class="reveal" style="margin-bottom:3.2rem;">
+      <div class="text-center" style="margin-bottom:1.1rem;">
+        <div class="eyebrow" style="margin-bottom:0.7rem;">Put a gallon in perspective</div>
+        <p class="dim" style="font-size:0.9rem; max-width:40rem; margin:0 auto;">
+          Pick anything — see how many AI prompts hide the same water.
+        </p>
+      </div>
+      <div class="bridge bridge-ai glass" id="aiBridge">
+        <div class="bridge-cell ab-pick">
+          <div class="bridge-emoji" id="abEmoji">🍔</div>
+          <div class="bridge-big" id="abName">Beef burger</div>
+          <div class="bridge-sub" id="abGal">≈ 630 gallons</div>
+          <div class="ab-hint">change ▾</div>
+          <select id="abSelect" class="ab-select" aria-label="Choose an item to compare with AI"></select>
+        </div>
+        <div class="bridge-eq">=</div>
+        <div class="bridge-cell">
+          <div class="bridge-emoji">💬</div>
+          <div class="bridge-big" id="abQ">~790,000</div>
+          <div class="bridge-sub">standard AI questions (~3 mL each)</div>
+        </div>
+        <div class="bridge-eq">=</div>
+        <div class="bridge-cell">
+          <div class="bridge-emoji">🧠</div>
+          <div class="bridge-big" id="abR">~16,000</div>
+          <div class="bridge-sub">AI reasoning queries (~150 mL each)</div>
+        </div>
+      </div>
+      <p class="bridge-note">
+        Per question it's a few drops — but
+        <a href="https://arxiv.org/abs/2304.03271" target="_blank" rel="noopener">training GPT-3 took ≈ 5.4 million litres</a>
+        (about the water to build 370 cars), and ChatGPT now fields a
+        <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">billion-plus questions a day</a>.
+        AI's water cost is tiny per use and enormous in aggregate — and it's drawn from a handful of often
+        water-stressed places where the data centers sit.
+      </p>
+    </div>
+
     <div class="reveal text-center" style="margin-bottom:2.2rem;">
       <div class="eyebrow" style="margin-bottom:1rem;">Side by side</div>
       <h2 class="section-title">Every gallon,<br><span style="color:var(--aqua)">side by side</span></h2>
@@ -512,57 +531,6 @@
     </div>
     <div id="chartScaleCap" class="dim text-center" style="font-size:0.78rem; margin-bottom:1rem;"></div>
     <div id="breakdownList" style="display:flex; flex-direction:column; gap:0.9rem;"></div>
-    <div class="reveal" style="margin-top:2.8rem;">
-      <div class="bridge glass">
-        <div class="bridge-cell">
-          <div class="bridge-emoji">🍔</div>
-          <div class="bridge-big">1 burger</div>
-          <div class="bridge-sub">≈ 630 gallons hidden</div>
-        </div>
-        <div class="bridge-eq">=</div>
-        <div class="bridge-cell">
-          <div class="bridge-emoji">🚿</div>
-          <div class="bridge-big">40 showers</div>
-          <div class="bridge-sub">at 15.8 gallons each</div>
-        </div>
-        <div class="bridge-eq">=</div>
-        <div class="bridge-cell">
-          <div class="bridge-emoji">📅</div>
-          <div class="bridge-big">~12 days</div>
-          <div class="bridge-sub">of one person's indoor water</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="reveal" style="margin-top:1.4rem;">
-      <div class="bridge bridge-ai glass">
-        <div class="bridge-cell">
-          <div class="bridge-emoji">🍔</div>
-          <div class="bridge-big">1 burger</div>
-          <div class="bridge-sub">≈ 630 gallons</div>
-        </div>
-        <div class="bridge-eq">=</div>
-        <div class="bridge-cell">
-          <div class="bridge-emoji">💬</div>
-          <div class="bridge-big">~800,000</div>
-          <div class="bridge-sub">standard AI questions (~3 mL each)</div>
-        </div>
-        <div class="bridge-eq">=</div>
-        <div class="bridge-cell">
-          <div class="bridge-emoji">🧠</div>
-          <div class="bridge-big">~16,000</div>
-          <div class="bridge-sub">AI reasoning queries (~150 mL each)</div>
-        </div>
-      </div>
-      <p class="bridge-note">
-        Per question it's a few drops — but
-        <a href="https://arxiv.org/abs/2304.03271" target="_blank" rel="noopener">training GPT-3 took ≈ 5.4 million litres</a>
-        (about the water to build 370 cars), and ChatGPT now fields a
-        <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">billion-plus questions a day</a>.
-        AI's water cost is tiny per use and enormous in aggregate — and it's drawn from a handful of often
-        water-stressed places where the data centers sit.
-      </p>
-    </div>
 
     <p class="reveal text-center dim" style="margin-top:2.2rem; font-size:0.85rem; max-width:66rem; margin-left:auto; margin-right:auto;">
       <strong style="color:var(--aqua)">Indoor</strong>: measured per-use averages from the Water Research Foundation's
@@ -815,6 +783,16 @@ var items = [
 function itemById(id){ for (var i=0;i<items.length;i++) if (items[i].id===id) return items[i]; return null; }
 function catVar(cat){ return cat==='food' ? 'amber' : cat==='ai' ? 'violet' : 'aqua'; }
 
+// AI yardsticks: water per standard text prompt / reasoning prompt (mL)
+var AI_TEXT_ML = 3, AI_REASON_ML = 150;
+// emoji for the bridge picker (indoor items render an SVG icon in the chart, not an emoji)
+var BRIDGE_EMOJI = { toilet:'🚽', shower:'🚿', bath:'🛁', faucet:'🚰', laundry:'🧺', dishwasher:'🍽️', handwash:'🧽', teeth:'🪥' };
+function emojiFor(it){ return it.emoji || BRIDGE_EMOJI[it.icon] || '💧'; }
+// round to ~2 significant figures so big equivalents read cleanly
+function roundNice(n){ if (n < 10) return Math.round(n); var p = Math.pow(10, Math.floor(Math.log10(n)) - 1); return Math.round(n/p) * p; }
+// how many standard chat prompts hold the same water as `gal` gallons
+function chatQueries(gal){ return roundNice(gal * ML_PER_GAL / AI_TEXT_ML); }
+
 /* =========================================================
    HERO — falling drops + bubbles + breathing counter
    ========================================================= */
@@ -849,15 +827,6 @@ function svgBubbles(groupId, count, xMin, xMax, yBase){
     g.appendChild(b);
   }
 }
-function heroCounter(){
-  var el = document.getElementById('heroCount');
-  var phase = 0;
-  (function tick(){
-    phase += 0.012;
-    el.textContent = Math.round(90 + Math.sin(phase)*10);
-    requestAnimationFrame(tick);
-  })();
-}
 
 /* =========================================================
    UNIFIED CHART — render once, rescale on filter
@@ -877,7 +846,9 @@ function renderChart(){
                  : hasBand ? (fmtNum(it.low)+'<span style="color:var(--muted)">–</span>'+fmtNum(it.high))
                  : fmtNum(it.value);
     var unitLabel = (hasAvg ? 'avg · ' : (hasBand ? 'range · ' : '')) + it.basis;
-    var subText = it.sub + (it.liters ? (' · '+fmtNum(it.liters)+' L total') : '');
+    var subText = (it.cat === 'ai')
+      ? it.sub
+      : '≈ ' + fmtNum(chatQueries(it.value)) + ' chat queries';
     var cites = it.cites.map(function(c){ return '<a class="b-cite" href="'+c.h+'" target="_blank" rel="noopener">'+c.s+' ↗</a>'; }).join('');
     var note = it.note ? '<div class="food-note">'+it.note+'</div>' : '';
     var eq = '';
@@ -988,6 +959,34 @@ function setupFilters(){
 }
 
 /* =========================================================
+   INTERACTIVE AI BRIDGE — pick any food/indoor item, see its
+   water expressed in standard + reasoning AI prompts.
+   ========================================================= */
+function updateAiBridge(id){
+  var it = itemById(id); if (!it) return;
+  var ml = it.value * ML_PER_GAL; // food/indoor values are already gallons
+  document.getElementById('abEmoji').textContent = emojiFor(it);
+  document.getElementById('abName').textContent  = it.name;
+  document.getElementById('abGal').textContent   = '≈ ' + fmtNum(it.value) + ' gallon' + (it.value === 1 ? '' : 's');
+  document.getElementById('abQ').textContent     = '~' + fmtNum(roundNice(ml / AI_TEXT_ML));
+  document.getElementById('abR').textContent     = '~' + fmtNum(roundNice(ml / AI_REASON_ML));
+}
+function setupAiBridge(){
+  var sel = document.getElementById('abSelect'); if (!sel) return;
+  var groups = { food:[], indoor:[] };
+  items.forEach(function(it){ if (it.cat === 'food' || it.cat === 'indoor') groups[it.cat].push(it); });
+  function opts(arr){
+    return arr.sort(function(a,b){ return b.value - a.value; })
+      .map(function(it){ return '<option value="'+it.id+'">'+it.name+' · '+fmtNum(it.value)+' gal</option>'; }).join('');
+  }
+  sel.innerHTML = '<optgroup label="Food">'+opts(groups.food)+'</optgroup>' +
+                  '<optgroup label="Indoor">'+opts(groups.indoor)+'</optgroup>';
+  sel.value = 'burger';
+  updateAiBridge('burger');
+  sel.addEventListener('change', function(){ updateAiBridge(sel.value); });
+}
+
+/* =========================================================
    SCROLL REVEAL
    ========================================================= */
 function setupReveal(){
@@ -1028,10 +1027,10 @@ function applyTwoCol(){
    ========================================================= */
 window.addEventListener('DOMContentLoaded', function(){
   makeDrops();
-  heroCounter();
   svgBubbles('heroBubbles', 9, 95, 225, 392);
   renderChart();
   setupFilters();
+  setupAiBridge();
   setupReveal();
   applyTwoCol();
   window.addEventListener('resize', applyTwoCol);

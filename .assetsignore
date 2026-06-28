@@ -1,0 +1,10 @@
+.git
+.git/**
+.claude
+.claude/**
+.DS_Store
+.editorconfig
+.gitignore
+LICENSE.txt
+wrangler.jsonc
+.assetsignore
