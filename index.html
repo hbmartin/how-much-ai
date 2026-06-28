@@ -214,6 +214,38 @@
   }
   .b-cite:hover { opacity: 1; border-color: var(--aqua); }
 
+  /* ---------- Category filter chips ---------- */
+  .filters { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-top: 1.8rem; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none;
+    padding: 0.5rem 1.05rem; border-radius: 999px; font-size: 0.84rem; font-weight: 600;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--slate);
+    transition: color 0.25s, background 0.25s, border-color 0.25s, opacity 0.25s, transform 0.15s;
+  }
+  .chip:hover { transform: translateY(-1px); }
+  .chip .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+  .chip[data-on="true"].chip-indoor { color: var(--aqua);  border-color: rgba(94,234,212,0.5); background: rgba(94,234,212,0.10); }
+  .chip[data-on="true"].chip-food   { color: var(--amber); border-color: rgba(251,191,36,0.5); background: rgba(251,191,36,0.10); }
+  .chip[data-on="false"] { opacity: 0.5; }
+  .chip[data-on="false"] .dot { background: var(--muted); }
+
+  /* ---------- Category tag + unified-row extras ---------- */
+  .cat-tag {
+    font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;
+    padding: 0.12rem 0.5rem; border-radius: 999px; margin-left: 0.45rem; vertical-align: middle;
+  }
+  .cat-indoor { color: var(--aqua);  background: rgba(94,234,212,0.12); }
+  .cat-food   { color: var(--amber); background: rgba(251,191,36,0.12); }
+  .b-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+  .b-eq { font-size: 0.74rem; color: var(--aqua); font-weight: 600; margin-top: 0.55rem; }
+  .b-row[data-hidden="true"] { display: none; }
+  .range-solid {
+    position: absolute; top: 0; bottom: 0; left: 0; width: 0; border-radius: 999px;
+    background: linear-gradient(90deg, var(--amber), var(--coral));
+    box-shadow: 0 0 16px rgba(251,113,133,0.22);
+    transition: width 1.2s cubic-bezier(.2,.7,.2,1) 0.1s;
+  }
+
   /* ---------- Footer ---------- */
   footer { border-top: 1px solid var(--border); }
   .src-link { display: block; padding: 0.9rem 1rem; border-radius: 12px; transition: transform 0.25s, background 0.25s; }
@@ -221,32 +253,8 @@
   .src-title { font-weight: 600; color: var(--aqua); }
   .src-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
 
-  /* ---------- Outdoor stat tiles ---------- */
-  .ostat-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 920px; margin: 0 auto; }
-  @media (min-width: 720px) { .ostat-grid { grid-template-columns: repeat(3, 1fr); } }
-  .ostat { padding: 1.7rem 1.3rem; text-align: center; transition: transform 0.3s, border-color 0.3s; }
-  .ostat:hover { transform: translateY(-5px); border-color: rgba(94,234,212,0.3); }
-  .ostat-num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 2rem; line-height: 1; }
-  .ostat-cap { font-size: 0.8rem; color: var(--slate); margin-top: 0.6rem; line-height: 1.45; }
-
-  /* ---------- Food cards (virtual water) ---------- */
-  .food-grid { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
-  @media (min-width: 640px) { .food-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1000px) { .food-grid { grid-template-columns: repeat(3, 1fr); } }
-  .food-card { padding: 1.5rem; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
-  .food-card:hover { transform: translateY(-6px); border-color: rgba(251,191,36,0.4); box-shadow: 0 18px 50px rgba(0,0,0,0.35); }
-  .food-emoji { font-size: 2.2rem; line-height: 1; }
-  .food-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin: 0.6rem 0 0.1rem; }
-  .food-gal { font-family: 'Fraunces', serif; font-weight: 800; font-size: 2.7rem; line-height: 1; color: var(--amber); }
-  .food-gal small { font-size: 0.32em; font-weight: 400; color: var(--muted); margin-left: 0.3em; }
-  .food-liters { font-size: 0.76rem; color: var(--muted); margin-top: 0.2rem; }
-  .food-bar-track { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.06); margin: 1rem 0 0.55rem; overflow: hidden; }
-  .food-bar { height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--amber), var(--coral)); transition: width 1.2s cubic-bezier(.2,.7,.2,1); }
-  .food-eq { font-size: 0.82rem; color: var(--aqua); font-weight: 600; }
-  .food-why { font-size: 0.82rem; color: var(--slate); margin-top: 0.7rem; line-height: 1.5; }
-  .food-perkg { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; }
-  .food-note { font-size: 0.71rem; color: var(--muted); font-style: italic; margin-top: 0.5rem; line-height: 1.45; }
-  .food-cites { display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; margin-top: 0.6rem; }
+  /* ---------- Footnote (e.g. almond blue-water note) ---------- */
+  .food-note { font-size: 0.71rem; color: var(--muted); font-style: italic; margin-top: 0.5rem; line-height: 1.45; max-width: 64ch; }
 
   /* ---------- Bridge equation (food → showers → days) ---------- */
   .bridge {
@@ -298,9 +306,7 @@
       <span>Drops</span>
     </div>
     <div class="nav-links">
-      <a href="#breakdown">Everyday</a>
-      <a href="#outdoors">Outdoors</a>
-      <a href="#food">Hidden Water</a>
+      <a href="#breakdown">Compare</a>
       <a href="#sources">Sources</a>
     </div>
   </div>
@@ -325,8 +331,8 @@
           vanishes through a handful of familiar fixtures.
         </p>
         <div style="margin-top:2.4rem; display:flex; flex-wrap:wrap; gap:0.8rem;">
-          <a href="#breakdown" class="btn btn-primary">See the breakdown</a>
-          <a href="#food" class="btn btn-ghost">The water in your food</a>
+          <a href="#breakdown" class="btn btn-primary">Compare every gallon</a>
+          <a href="#sources" class="btn btn-ghost">View the sources</a>
         </div>
         <div class="stat-row">
           <div>
@@ -418,87 +424,23 @@
 <!-- ============ BREAKDOWN ============ -->
 <section id="breakdown" class="bg-2 section-pad px">
   <div class="wrap">
-    <div class="reveal text-center" style="margin-bottom:3rem;">
-      <div class="eyebrow" style="margin-bottom:1rem;">Where it goes</div>
-      <h2 class="section-title">Everyday water,<br><span style="color:var(--aqua)">by the gallon</span></h2>
-      <p class="lead" style="margin:1.4rem auto 0; max-width:44rem;">
-        Each bar is a <em>single use</em> of that fixture, measured the same way so they compare
-        directly. The band runs from an <span style="color:var(--mint)">efficient</span> setup to a
-        <span style="color:var(--amber)">wasteful</span> one; the diamond marks the
-        <span style="color:var(--cream)">measured U.S. average</span>. Sources are cited per row.
+    <div class="reveal text-center" style="margin-bottom:2.2rem;">
+      <div class="eyebrow" style="margin-bottom:1rem;">Side by side</div>
+      <h2 class="section-title">Every gallon,<br><span style="color:var(--aqua)">side by side</span></h2>
+      <p class="lead" style="margin:1.4rem auto 0; max-width:46rem;">
+        A flush, a shower, a slice of cheese, a burger — all on one scale, smallest to largest. Indoor fixtures
+        show an <span style="color:var(--mint)">efficient → wasteful</span> band with the
+        <span style="color:var(--cream)">U.S. average (◆)</span>; food shows the water behind
+        a single serving. <strong>Toggle a category to zoom in.</strong>
       </p>
-      <div style="display:flex; flex-wrap:wrap; gap:1.3rem; justify-content:center; margin-top:1.5rem; font-size:0.76rem; color:var(--muted);">
-        <span style="display:inline-flex; align-items:center; gap:0.5rem;">
-          <span style="width:34px; height:8px; border-radius:999px; background:linear-gradient(90deg,var(--mint),var(--amber)); display:inline-block;"></span>
-          efficient → wasteful fixture
-        </span>
-        <span style="display:inline-flex; align-items:center; gap:0.5rem;">
-          <span style="width:11px; height:11px; transform:rotate(45deg); background:var(--cream); display:inline-block; border-radius:2px;"></span>
-          measured U.S. average (REU2016, where available)
-        </span>
-        <span>One shared scale · 0–42 gal per use</span>
+      <div class="filters">
+        <div class="chip chip-indoor" data-cat="indoor" data-on="true"><span class="dot"></span> Indoor</div>
+        <div class="chip chip-food"   data-cat="food"   data-on="true"><span class="dot"></span> Food</div>
       </div>
     </div>
+    <div id="chartScaleCap" class="dim text-center" style="font-size:0.78rem; margin-bottom:1rem;"></div>
     <div id="breakdownList" style="display:flex; flex-direction:column; gap:0.9rem;"></div>
-    <p class="reveal text-center dim" style="margin-top:2.5rem; font-size:0.85rem; max-width:64rem; margin-left:auto; margin-right:auto;">
-      Indoor-use shares and the measured per-use averages come from the Water Research Foundation's
-      <em>Residential End Uses of Water, Version 2</em> (2016) — the most rigorous U.S. household metering study —
-      with efficient/standard fixture rates from EPA WaterSense and ENERGY STAR. That study measured indoor use at
-      <strong style="color:var(--slate)">52.1 gallons per person per day</strong>, below the older 80–100 estimate as efficient fixtures spread.
-    </p>
-  </div>
-</section>
-
-<!-- ============ OUTDOORS ============ -->
-<section id="outdoors" class="bg-3 section-pad px">
-  <div class="wrap text-center">
-    <div class="reveal" style="margin-bottom:2.5rem;">
-      <div class="eyebrow" style="margin-bottom:1rem;">Step outside</div>
-      <h2 class="section-title">Outdoors, the meter <span style="color:var(--amber)">spins</span></h2>
-      <p class="lead" style="margin:1.4rem auto 0; max-width:42rem;">
-        Indoors you count gallons; outdoors you count hundreds. Nearly a third of a U.S. household's
-        water is used outside — and up to half of it never reaches the plant.
-      </p>
-    </div>
-    <div class="ostat-grid reveal">
-      <div class="glass ostat">
-        <div class="ostat-num" style="color:var(--aqua)">9 billion gal</div>
-        <div class="ostat-cap">used outdoors by U.S. homes every day — about 30% of all household water</div>
-      </div>
-      <div class="glass ostat">
-        <div class="ostat-num" style="color:var(--amber)">up to 50%</div>
-        <div class="ostat-cap">of outdoor water lost to wind, evaporation and runoff</div>
-      </div>
-      <div class="glass ostat">
-        <div class="ostat-num" style="color:var(--coral)">25,000 gal</div>
-        <div class="ostat-cap">wasted per year by a single poorly-tuned irrigation system</div>
-      </div>
-    </div>
-    <p class="reveal muted" style="margin-top:1.6rem; font-size:0.9rem;">
-      A garden hose runs 9–17 gallons a minute — ten minutes can out-pour a low-flow shower.
-    </p>
-    <div class="reveal b-cites" style="justify-content:center; margin-top:0.8rem;">
-      <a class="b-cite" href="https://www.epa.gov/watersense/statistics-and-facts" target="_blank" rel="noopener">EPA WaterSense · Statistics &amp; Facts ↗</a>
-      <a class="b-cite" href="https://www.dripworks.com/blog/garden-hose-flow-rates" target="_blank" rel="noopener">Garden hose flow-rate data ↗</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ HIDDEN WATER IN FOOD ============ -->
-<section id="food" class="bg-4 section-pad px">
-  <div class="wrap">
-    <div class="reveal text-center" style="margin-bottom:3rem;">
-      <div class="eyebrow" style="margin-bottom:1rem;">The water you can't see</div>
-      <h2 class="section-title">The thirstiest thing<br>you do is <span style="color:var(--amber)">eat</span></h2>
-      <p class="lead" style="margin:1.4rem auto 0; max-width:44rem;">
-        A flush or a shower is gallons. The food on your plate is <em>hundreds</em> — "virtual water"
-        hidden in growing, feeding and processing. Each card is one ordinary serving, shown next to its
-        equivalent in <span style="color:var(--aqua)">15.8-gallon showers</span>.
-      </p>
-    </div>
-    <div class="food-grid" id="foodGrid"></div>
-
-    <div class="reveal" style="margin-top:2.6rem;">
+    <div class="reveal" style="margin-top:2.8rem;">
       <div class="bridge glass">
         <div class="bridge-cell">
           <div class="bridge-emoji">🍔</div>
@@ -518,17 +460,12 @@
           <div class="bridge-sub">of one person's indoor water</div>
         </div>
       </div>
-      <p class="text-center dim" style="font-size:0.76rem; margin-top:0.9rem;">
-        Based on a 15.8-gallon average shower and 52.1 gallons of indoor use per person per day
-        (Water Research Foundation, REU2016).
-      </p>
     </div>
 
-    <p class="reveal text-center dim" style="margin-top:2.5rem; font-size:0.85rem; max-width:64rem; margin-left:auto; margin-right:auto;">
-      Per-serving figures are the total (green + blue + grey) water footprint, drawn from the
-      <strong style="color:var(--slate)">Water Footprint Network</strong> and the peer-reviewed studies of
-      <strong style="color:var(--slate)">Mekonnen &amp; Hoekstra (2011, 2012)</strong>. These are typical global averages;
-      real footprints vary widely with where and how the food is grown.
+    <p class="reveal text-center dim" style="margin-top:2.2rem; font-size:0.85rem; max-width:66rem; margin-left:auto; margin-right:auto;">
+      <strong style="color:var(--aqua)">Indoor</strong>: measured per-use averages from the Water Research Foundation's
+      <em>Residential End Uses of Water</em> (2016), with efficient/standard rates from EPA WaterSense &amp; ENERGY STAR (REU2016 measured indoor use at 52.1 gal/person/day).
+      <strong style="color:var(--amber)">Food</strong>: total green + blue + grey “virtual water” per typical serving, from the Water Footprint Network and Mekonnen &amp; Hoekstra (2011, 2012) — global averages that vary widely by region and method.
     </p>
   </div>
 </section>
@@ -567,7 +504,7 @@
           </a>
           <a class="src-link glass" href="https://www.epa.gov/watersense" target="_blank" rel="noopener">
             <div class="src-title">EPA WaterSense</div>
-            <div class="src-sub">Fixture rates &amp; outdoor use: toilets, showers, faucets, irrigation</div>
+            <div class="src-sub">Fixture efficiency rates: toilets, showers, faucets</div>
           </a>
           <a class="src-link glass" href="https://www.energystar.gov/products" target="_blank" rel="noopener">
             <div class="src-title">ENERGY STAR</div>
@@ -647,50 +584,96 @@ var icons = {
 };
 
 /* =========================================================
-   DATA — gallons per single use, one shared scale.
-   low/high  = efficient -> wasteful fixture (EPA WaterSense / ENERGY STAR)
-   avg       = measured U.S. average per event (WRF REU2016)
-   Ordered smallest -> largest average so the ramp reads cleanly.
+   CITATIONS & YARDSTICKS
    ========================================================= */
-var SCALE_MAX = 42;            // gal — shared axis maximum for every bar
-var GRID = [10, 20, 30, 40];   // gal — shared gridlines drawn in every bar
-var WRF = { s:'WRF · Residential End Uses of Water (2016)', h:'https://allianceforwaterefficiency.org/resource/residential-end-uses-water-study-1999-and-2016/' };
+var WRF    = { s:'WRF · Residential End Uses of Water (2016)', h:'https://allianceforwaterefficiency.org/resource/residential-end-uses-water-study-1999-and-2016/' };
+var MH2011 = { s:'Mekonnen & Hoekstra 2011 · Water Footprint of Crops', h:'https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2011-WaterFootprintCrops.pdf' };
+var MH2012 = { s:'Mekonnen & Hoekstra 2012 · Farm Animal Products', h:'https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf' };
+var WFNPG  = { s:'Water Footprint Network · Product Gallery', h:'https://www.waterfootprint.org/resources/interactive-tools/product-gallery/' };
+var WCALC  = { s:'Water Footprint Calculator · Food Guide', h:'https://watercalculator.org/water-footprint-of-food-guide/' };
+var ESWASH = { s:'ENERGY STAR · Clothes Washers', h:'https://www.energystar.gov/products/clothes_washers' };
+var ESDISH = { s:'ENERGY STAR · Dishwashers', h:'https://www.energystar.gov/products/dishwashers/key_product_criteria' };
+var EPATOI = { s:'EPA WaterSense · Residential Toilets', h:'https://www.epa.gov/watersense/residential-toilets' };
+var EPASHO = { s:'EPA WaterSense · Showerheads', h:'https://www.epa.gov/watersense/showerheads' };
+var EPAFAU = { s:'EPA WaterSense · Bathroom Faucets', h:'https://www.epa.gov/watersense/bathroom-faucets' };
+var EPASAV = { s:'EPA WaterSense · Start Saving', h:'https://www.epa.gov/watersense/start-saving' };
 
-var activities = [
-  { id:'faucet', name:'Faucet', basis:'per use', pct:'~19% of indoor use', color:'#86efac',
-    low:0.5, high:1.1, avg:0.5,
-    desc:'One faucet use averages just half a gallon — roughly 30 seconds of flow — but homes open a faucet 50+ times a day. A WaterSense aerator (1.5 gpm) beats the 2.2 gpm standard.',
-    cites:[ WRF, { s:'EPA WaterSense · Bathroom Faucets', h:'https://www.epa.gov/watersense/bathroom-faucets' } ] },
-  { id:'teeth', name:'Brushing teeth', basis:'per brushing', pct:'part of faucet use', color:'#5eead4',
-    low:0.25, high:4,
-    desc:'Wet the brush and turn the tap off, and a brushing uses about a quarter-gallon. Leave it running and the same two minutes pours roughly 4 gallons — close to 8 a day.',
-    cites:[ { s:'EPA WaterSense · Start Saving', h:'https://www.epa.gov/watersense/start-saving' } ] },
-  { id:'toilet', name:'Toilet', basis:'per flush', pct:'~24% of indoor use', color:'#5eead4',
-    low:1.28, high:6, avg:2.6,
-    desc:'A WaterSense toilet uses 1.28 gallons per flush versus the 1.6-gallon federal standard, while pre-1994 models reach 6 or more. The measured U.S. average is 2.6 gallons per flush.',
-    cites:[ { s:'EPA WaterSense · Residential Toilets', h:'https://www.epa.gov/watersense/residential-toilets' }, WRF ] },
-  { id:'dishwasher', name:'Dishwasher', basis:'per cycle', pct:'~1–2% of indoor use', color:'#67e8f9',
-    low:3.2, high:10, avg:6.1,
-    desc:'A new ENERGY STAR dishwasher uses 3.2 gallons or less per cycle; older machines averaged 10. Today’s measured average is 6.1 gallons — usually less than washing the same load by hand.',
-    cites:[ { s:'ENERGY STAR · Dishwashers', h:'https://www.energystar.gov/products/dishwashers/key_product_criteria' }, WRF ] },
-  { id:'handwash', name:'Dishes by hand', basis:'per wash', pct:'part of faucet use', color:'#86efac',
-    low:4, high:27,
-    desc:'Fill a basin and a hand-wash uses a few gallons; leave the tap running and it climbs fast — about 2 gallons a minute, up to 27 for a full sink of dishes (often more than the dishwasher).',
-    cites:[ { s:'EPA WaterSense · Start Saving', h:'https://www.epa.gov/watersense/start-saving' } ] },
-  { id:'shower', name:'Shower', basis:'per 7.8-min shower', pct:'~20% of indoor use', color:'#22d3ee',
-    low:12, high:20, avg:15.8,
-    desc:'The average U.S. shower runs 7.8 minutes and uses 15.8 gallons. A WaterSense head (2.0 gpm) trims the 2.5 gpm standard, and a 1.5 gpm low-flow head cuts it further.',
-    cites:[ WRF, { s:'EPA WaterSense · Showerheads', h:'https://www.epa.gov/watersense/showerheads' } ] },
-  { id:'bath', name:'Bath', basis:'per bath', pct:'~3% of indoor use', color:'#fbbf24',
-    low:15, high:36, avg:20.2,
-    desc:'A bath averages 20.2 gallons, though a brimming standard tub holds about 36. A short shower almost always beats a bath — only a very long one loses the edge.',
-    cites:[ WRF, { s:'EPA WaterSense · Showerheads', h:'https://www.epa.gov/watersense/showerheads' } ] },
-  { id:'laundry', name:'Washing Machine', basis:'per load', pct:'~17% of indoor use', color:'#fb7185',
-    low:14, high:40, avg:29.3,
-    desc:'An ENERGY STAR washer uses about 14 gallons a load versus 20 for a standard machine, and older top-loaders can top 40. The measured U.S. average is 29.3 gallons per load.',
-    cites:[ { s:'ENERGY STAR · Clothes Washers', h:'https://www.energystar.gov/products/clothes_washers' }, WRF ] }
-];
+var SHOWER_GAL  = 15.8;  // REU2016 average shower — "= N showers" yardstick
+var INDOOR_GPCD = 52.1;  // REU2016 measured indoor use per person per day
+
 function fmtNum(n){ return n >= 1000 ? n.toLocaleString('en-US') : String(n); }
+
+/* =========================================================
+   DATA — one bar per item, three categories, one shared scale.
+   cat       = 'indoor' | 'food'
+   value     = headline gallons (REU avg for indoor; per serving for food)
+   low/high  = efficient -> wasteful band (indoor fixtures)
+   avg       = measured U.S. average per event (WRF REU2016) -> diamond marker
+   food has a single value (total green+blue+grey footprint), no band.
+   Ordered largest -> smallest value.
+   ========================================================= */
+var items = [
+  { id:'burger', cat:'food', emoji:'🍔', name:'Beef burger', sub:'beef ≈ 15,400 L/kg', basis:'per 150 g patty',
+    value:630, liters:2400, equiv:true,
+    desc:'Years of water go into the grain, forage and roughage one cow eats over its lifetime.', cites:[ WFNPG, MH2012 ] },
+  { id:'chocolate', cat:'food', emoji:'🍫', name:'Chocolate bar', sub:'cocoa ≈ 17,100 L/kg', basis:'per 100 g bar',
+    value:450, liters:1700, equiv:true,
+    desc:'Thirsty cacao trees, plus water-heavy fermentation and refining of the beans.', cites:[ MH2011, WFNPG ] },
+  { id:'lamb', cat:'food', emoji:'🥩', name:'Lamb chop', sub:'mutton ≈ 10,400 L/kg', basis:'per 100 g',
+    value:275, liters:1040, equiv:true,
+    desc:'Like beef, almost all of it is the water needed to grow the animal’s feed.', cites:[ MH2012 ] },
+  { id:'pork', cat:'food', emoji:'🥓', name:'Pork chop', sub:'pork ≈ 6,000 L/kg', basis:'per 150 g',
+    value:240, liters:900, equiv:true,
+    desc:'Pigs eat large quantities of water-intensive feed crops like corn and soy.', cites:[ MH2012 ] },
+  { id:'almonds', cat:'food', emoji:'🌰', name:'Handful of almonds', sub:'tree nuts ≈ 9,000–15,000 L/kg', basis:'1 oz · ~23 nuts',
+    value:90, liters:340, equiv:true,
+    desc:'Nut trees need constant, year-round irrigation, often in drought-prone regions.',
+    note:'“1.1 gallons per almond” counts irrigation (blue) water only; this is the full green + blue + grey footprint.',
+    cites:[ MH2011, WCALC ] },
+  { id:'coffee', cat:'food', emoji:'☕', name:'Cup of coffee', sub:'beans ≈ 18,900 L/kg', basis:'125 ml · ~7 g beans',
+    value:34, liters:130, equiv:true,
+    desc:'High evaporation in the field and intensive wet-processing of the coffee cherries.', cites:[ WFNPG, MH2011 ] },
+  { id:'laundry', cat:'indoor', icon:'laundry', name:'Washing machine', sub:'~17% of indoor use', basis:'per load',
+    value:29.3, low:14, high:40, avg:29.3,
+    desc:'An ENERGY STAR washer uses ~14 gallons a load versus ~20 for a standard machine; older top-loaders top 40. Measured U.S. average: 29.3.',
+    cites:[ ESWASH, WRF ] },
+  { id:'cheese', cat:'food', emoji:'🧀', name:'Slice of cheese', sub:'cheese ≈ 3,178 L/kg', basis:'per 30 g',
+    value:25, liters:95,
+    desc:'It takes gallons of milk — and the feed and water behind dairy cows — to make each block.', cites:[ MH2012 ] },
+  { id:'butter', cat:'food', emoji:'🧈', name:'Pat of butter', sub:'butter ≈ 5,553 L/kg', basis:'1 tbsp · 14 g',
+    value:21, liters:78,
+    desc:'Butter is concentrated cream — a tablespoon distills the milk, and dairy-cow water, from well over a cup.', cites:[ MH2012 ] },
+  { id:'bath', cat:'indoor', icon:'bath', name:'Bath', sub:'~3% of indoor use', basis:'per bath',
+    value:20.2, low:15, high:36, avg:20.2,
+    desc:'A bath averages 20.2 gallons; a brimming standard tub holds about 36. A short shower almost always beats a bath.',
+    cites:[ WRF, EPASHO ] },
+  { id:'shower', cat:'indoor', icon:'shower', name:'Shower', sub:'~20% of indoor use', basis:'per 7.8-min shower',
+    value:15.8, low:12, high:20, avg:15.8,
+    desc:'The average U.S. shower runs 7.8 minutes and uses 15.8 gallons. A WaterSense head (2.0 gpm) trims the 2.5 gpm standard.',
+    cites:[ WRF, EPASHO ] },
+  { id:'handwash', cat:'indoor', icon:'handwash', name:'Dishes by hand', sub:'part of faucet use', basis:'per wash',
+    value:15.5, low:4, high:27,
+    desc:'Fill a basin and a hand-wash uses a few gallons; leave the tap running and it climbs to ~2 gallons a minute, up to 27 for a full sink — often more than the dishwasher.',
+    cites:[ EPASAV ] },
+  { id:'dishwasher', cat:'indoor', icon:'dishwasher', name:'Dishwasher', sub:'~1–2% of indoor use', basis:'per cycle',
+    value:6.1, low:3.2, high:10, avg:6.1,
+    desc:'A new ENERGY STAR dishwasher uses 3.2 gallons or less per cycle; older machines averaged 10. Measured average: 6.1.',
+    cites:[ ESDISH, WRF ] },
+  { id:'toilet', cat:'indoor', icon:'toilet', name:'Toilet', sub:'~24% of indoor use', basis:'per flush',
+    value:2.6, low:1.28, high:6, avg:2.6,
+    desc:'A WaterSense toilet uses 1.28 gallons per flush versus the 1.6-gallon federal standard, while pre-1994 models reach 6+. Measured average: 2.6.',
+    cites:[ EPATOI, WRF ] },
+  { id:'teeth', cat:'indoor', icon:'teeth', name:'Brushing teeth', sub:'part of faucet use', basis:'per brushing',
+    value:2.1, low:0.25, high:4,
+    desc:'Turn the tap off and a brushing uses about a quarter-gallon; leave it running and the same two minutes pours ~4 gallons — close to 8 a day.',
+    cites:[ EPASAV ] },
+  { id:'faucet', cat:'indoor', icon:'faucet', name:'Faucet', sub:'~19% of indoor use', basis:'per use',
+    value:0.5, low:0.5, high:1.1, avg:0.5,
+    desc:'One faucet use averages half a gallon — ~30 seconds of flow — but homes open a faucet 50+ times a day. A WaterSense aerator (1.5 gpm) beats the 2.2 gpm standard.',
+    cites:[ WRF, EPAFAU ] }
+];
+function itemById(id){ for (var i=0;i<items.length;i++) if (items[i].id===id) return items[i]; return null; }
+function catVar(cat){ return cat==='food' ? 'amber' : 'aqua'; }
 
 /* =========================================================
    HERO — falling drops + bubbles + breathing counter
@@ -737,117 +720,116 @@ function heroCounter(){
 }
 
 /* =========================================================
-   BREAKDOWN
+   UNIFIED CHART — render once, rescale on filter
    ========================================================= */
-function renderBreakdown(){
+var activeCats = { indoor:true, food:true };
+
+function renderChart(){
   var list = document.getElementById('breakdownList');
-  list.innerHTML = activities.map(function(a){
-    var basePct = (a.high/SCALE_MAX)*100;
-    var bandLeft = (a.low/SCALE_MAX)*100;
-    var bandWidth = ((a.high-a.low)/SCALE_MAX)*100;
-    var hasAvg = (a.avg !== undefined && a.avg !== null);
-    var grid = GRID.map(function(g){ return '<div class="grid-line" style="left:'+((g/SCALE_MAX)*100).toFixed(2)+'%"></div>'; }).join('');
-    var cites = a.cites.map(function(c){ return '<a class="b-cite" href="'+c.h+'" target="_blank" rel="noopener">'+c.s+' ↗</a>'; }).join('');
-    var headline = hasAvg
-      ? fmtNum(a.avg)
-      : fmtNum(a.low)+'<span style="color:var(--muted)">–</span>'+fmtNum(a.high);
-    var avgMarker = hasAvg
-      ? '<div class="range-avg" data-l="'+((a.avg/SCALE_MAX)*100)+'" title="U.S. average (REU2016): '+fmtNum(a.avg)+' gal"></div>'
+  var ordered = items.slice().sort(function(a,b){ return a.value - b.value; }); // least -> greatest, categories interleaved
+  list.innerHTML = ordered.map(function(it){
+    var iconHTML = it.emoji ? ('<span style="font-size:1.7rem; line-height:1;">'+it.emoji+'</span>') : icons[it.icon];
+    var hasBand = (it.low != null && it.high != null && it.high > it.low);
+    var hasAvg  = (it.avg != null);
+    var cvar = catVar(it.cat);
+    var headline = hasAvg ? fmtNum(it.avg)
+                 : hasBand ? (fmtNum(it.low)+'<span style="color:var(--muted)">–</span>'+fmtNum(it.high))
+                 : fmtNum(it.value);
+    var unitLabel = (hasAvg ? 'avg · ' : (hasBand ? 'range · ' : '')) + it.basis;
+    var subText = it.sub + (it.liters ? (' · '+fmtNum(it.liters)+' L total') : '');
+    var cites = it.cites.map(function(c){ return '<a class="b-cite" href="'+c.h+'" target="_blank" rel="noopener">'+c.s+' ↗</a>'; }).join('');
+    var note = it.note ? '<div class="food-note">'+it.note+'</div>' : '';
+    var eq = '';
+    if (it.equiv) {
+      var showers = Math.max(1, Math.round(it.value/SHOWER_GAL));
+      var days = it.value/INDOOR_GPCD;
+      eq = '<div class="b-eq">≈ '+showers+' shower'+(showers===1?'':'s')+(days>=2?(' · ≈ '+Math.round(days)+' days of indoor water'):'')+'</div>';
+    }
+    var bars = hasBand
+      ? '<div class="range-base" data-v="'+it.high+'" style="background:var(--'+cvar+')"></div>' +
+        '<div class="range-band" data-lo="'+it.low+'" data-hi="'+it.high+'"></div>' +
+        (hasAvg ? '<div class="range-avg" data-v="'+it.avg+'" title="U.S. average (REU2016): '+fmtNum(it.avg)+' gal"></div>' : '')
+      : '<div class="range-solid" data-v="'+it.value+'"></div>';
+    var scaleRow = hasBand
+      ? '<div class="b-scale"><span class="lo">'+fmtNum(it.low)+' gal · efficient</span><span class="hi">'+fmtNum(it.high)+' gal · wasteful</span></div>'
       : '';
     return '' +
-    '<div class="b-row glass" data-id="'+a.id+'">' +
-      '<div class="b-icon" style="color:'+a.color+'">'+icons[a.id]+'</div>' +
+    '<div class="b-row glass reveal" data-id="'+it.id+'" data-cat="'+it.cat+'">' +
+      '<div class="b-icon" style="color:var(--'+cvar+')">'+iconHTML+'</div>' +
       '<div class="b-main">' +
         '<div class="b-head">' +
-          '<div><div class="b-name">'+a.name+'</div><div class="b-pct">'+a.pct+'</div></div>' +
+          '<div><div class="b-name">'+it.name+' <span class="cat-tag cat-'+it.cat+'">'+it.cat+'</span></div><div class="b-sub">'+subText+'</div></div>' +
           '<div style="text-align:right">' +
             '<div class="b-val">'+headline+'<small style="font-size:0.58em; color:var(--muted); font-weight:400; margin-left:0.25em;">gal</small></div>' +
-            '<div class="b-unit">'+(hasAvg?'avg · ':'range · ')+a.basis+'</div>' +
+            '<div class="b-unit">'+unitLabel+'</div>' +
           '</div>' +
         '</div>' +
-        '<div class="range-track">' +
-          grid +
-          '<div class="range-base" style="background:'+a.color+'" data-w="'+basePct+'"></div>' +
-          '<div class="range-band" data-l="'+bandLeft+'" data-w="'+bandWidth+'"></div>' +
-          avgMarker +
-        '</div>' +
-        '<div class="b-scale"><span class="lo">'+fmtNum(a.low)+' gal · efficient</span><span class="hi">'+fmtNum(a.high)+' gal · wasteful</span></div>' +
-        '<div class="b-desc">'+a.desc+'</div>' +
+        '<div class="range-track"><div class="grid-wrap"></div>'+bars+'</div>' +
+        scaleRow + eq +
+        '<div class="b-desc">'+it.desc+'</div>' +
+        note +
         '<div class="b-cites">'+cites+'</div>' +
       '</div>' +
     '</div>';
   }).join('');
 }
-function animateBreakdownBars(row){
-  row.querySelectorAll('.range-base').forEach(function(el){ el.style.width = el.dataset.w + '%'; });
-  row.querySelectorAll('.range-band').forEach(function(el){ el.style.left = el.dataset.l + '%'; el.style.width = el.dataset.w + '%'; });
-  row.querySelectorAll('.range-avg').forEach(function(el){ el.style.left = el.dataset.l + '%'; });
+
+function niceStep(maxv){
+  var raw = maxv/4;
+  var pow = Math.pow(10, Math.floor(Math.log10(raw)));
+  var n = raw/pow;
+  var step = n < 1.5 ? 1 : n < 3 ? 2 : n < 7 ? 5 : 10;
+  return step*pow;
+}
+function chartScale(maxv){
+  var step = niceStep(maxv);
+  var axisMax = Math.ceil(maxv/step)*step;
+  var lines = [];
+  for (var g = step; g <= axisMax + 0.001; g += step) lines.push(g);
+  return { max:axisMax, lines:lines };
 }
 
-/* =========================================================
-   FOOD — virtual (hidden) water per common serving
-   gal/liters = total green+blue+grey water footprint
-   ========================================================= */
-var SHOWER_GAL = 15.8;   // REU2016 measured average shower, for the "= N showers" equivalent
-var INDOOR_GPCD = 52.1;  // REU2016 measured indoor use per person per day, for the "= N days" equivalent
-var MH2011 = { s:'Mekonnen & Hoekstra 2011 · Water Footprint of Crops', h:'https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2011-WaterFootprintCrops.pdf' };
-var MH2012 = { s:'Mekonnen & Hoekstra 2012 · Farm Animal Products', h:'https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf' };
-var WFNPG  = { s:'Water Footprint Network · Product Gallery', h:'https://www.waterfootprint.org/resources/interactive-tools/product-gallery/' };
-var WCALC  = { s:'Water Footprint Calculator · Food Guide', h:'https://watercalculator.org/water-footprint-of-food-guide/' };
+function applyScale(animate){
+  var rows = document.querySelectorAll('#breakdownList .b-row');
+  var maxv = 0;
+  rows.forEach(function(r){
+    var on = activeCats[r.dataset.cat];
+    r.setAttribute('data-hidden', on ? 'false' : 'true');
+    if (on){
+      var it = itemById(r.dataset.id);
+      var ext = (it.high != null) ? it.high : it.value;
+      if (ext > maxv) maxv = ext;
+    }
+  });
+  var cap = document.getElementById('chartScaleCap');
+  if (maxv <= 0){ if (cap) cap.textContent = 'Pick a category to compare.'; return; }
+  var sc = chartScale(maxv);
+  var multi = activeCats.indoor && activeCats.food;
+  if (cap) cap.textContent = 'Shared scale · 0 to ' + fmtNum(sc.max) + ' gallons' + (multi ? ' — toggle one category to zoom in.' : '.');
+  var gridHTML = sc.lines.map(function(g){ return '<div class="grid-line" style="left:'+((g/sc.max)*100).toFixed(2)+'%"></div>'; }).join('');
+  rows.forEach(function(r){
+    if (activeCats[r.dataset.cat]) r.classList.add('visible');
+    var gw = r.querySelector('.grid-wrap'); if (gw) gw.innerHTML = gridHTML;
+    var base = r.querySelector('.range-base');
+    var band = r.querySelector('.range-band');
+    var avg  = r.querySelector('.range-avg');
+    var solid= r.querySelector('.range-solid');
+    if (base)  base.style.width = ((+base.dataset.v)/sc.max*100) + '%';
+    if (band){ band.style.left = ((+band.dataset.lo)/sc.max*100) + '%'; band.style.width = (((+band.dataset.hi)-(+band.dataset.lo))/sc.max*100) + '%'; }
+    if (avg)   avg.style.left = ((+avg.dataset.v)/sc.max*100) + '%';
+    if (solid) solid.style.width = ((+solid.dataset.v)/sc.max*100) + '%';
+  });
+}
 
-var foods = [
-  { emoji:'🍔', name:'A beef burger', serving:'≈ 150 g patty', gal:630, liters:2400, perKg:'beef ≈ 15,400 L/kg',
-    why:'Years of water go into the grain, forage and roughage one cow eats over its lifetime.',
-    cites:[ WFNPG, MH2012 ] },
-  { emoji:'🍫', name:'A chocolate bar', serving:'100 g bar', gal:450, liters:1700, perKg:'cocoa ≈ 17,100 L/kg',
-    why:'Thirsty cacao trees, plus water-heavy fermentation and refining of the beans.',
-    cites:[ MH2011, WFNPG ] },
-  { emoji:'🥩', name:'A lamb chop', serving:'≈ 100 g', gal:275, liters:1040, perKg:'mutton ≈ 10,400 L/kg',
-    why:'Like beef, almost all of it is the water needed to grow the animal’s feed.',
-    cites:[ MH2012 ] },
-  { emoji:'🥓', name:'A pork chop', serving:'≈ 150 g', gal:240, liters:900, perKg:'pork ≈ 6,000 L/kg',
-    why:'Pigs eat large quantities of water-intensive feed crops like corn and soy.',
-    cites:[ MH2012 ] },
-  { emoji:'🌰', name:'A handful of almonds', serving:'1 oz · ~23 nuts', gal:90, liters:340, perKg:'tree nuts ≈ 9,000–15,000 L/kg',
-    why:'Nut trees need constant, year-round irrigation, often in drought-prone regions.',
-    note:'You may have seen “1.1 gallons per almond” — that counts irrigation (blue) water only. The figure above is the full green + blue + grey footprint.',
-    cites:[ MH2011, WCALC ] },
-  { emoji:'☕', name:'A cup of coffee', serving:'125 ml · ~7 g beans', gal:34, liters:130, perKg:'beans ≈ 18,900 L/kg',
-    why:'High evaporation in the field and intensive wet-processing of the coffee cherries.',
-    cites:[ WFNPG, MH2011 ] },
-  { emoji:'🧀', name:'A slice of cheese', serving:'≈ 30 g', gal:25, liters:95, perKg:'cheese ≈ 3,178 L/kg',
-    why:'It takes gallons of milk — and the feed and water behind dairy cows — to make each block.',
-    cites:[ MH2012 ] },
-  { emoji:'🧈', name:'A pat of butter', serving:'1 tbsp · 14 g', gal:21, liters:78, perKg:'butter ≈ 5,553 L/kg',
-    why:'Butter is concentrated cream — a single tablespoon distills the milk, and the dairy-cow water, from well over a cup.',
-    cites:[ MH2012 ] }
-];
-
-function renderFoods(){
-  var grid = document.getElementById('foodGrid');
-  var maxGal = Math.max.apply(null, foods.map(function(f){ return f.gal; }));
-  grid.innerHTML = foods.map(function(f){
-    var w = (f.gal / maxGal * 100).toFixed(1);
-    var showers = Math.max(1, Math.round(f.gal / SHOWER_GAL));
-    var days = f.gal / INDOOR_GPCD;
-    var dayStr = days >= 2 ? ' · ≈ ' + Math.round(days) + ' days indoors' : '';
-    var cites = f.cites.map(function(c){ return '<a class="b-cite" href="'+c.h+'" target="_blank" rel="noopener">'+c.s+' ↗</a>'; }).join('');
-    var note = f.note ? '<div class="food-note">'+f.note+'</div>' : '';
-    return '' +
-    '<div class="food-card glass reveal">' +
-      '<div class="food-emoji">'+f.emoji+'</div>' +
-      '<div class="food-name">'+f.name+'</div>' +
-      '<div class="dim" style="font-size:0.74rem;">'+f.serving+'</div>' +
-      '<div class="food-gal" style="margin-top:0.7rem;">'+fmtNum(f.gal)+'<small>gallons</small></div>' +
-      '<div class="food-liters">'+fmtNum(f.liters)+' liters · total water footprint</div>' +
-      '<div class="food-bar-track"><div class="food-bar" data-w="'+w+'"></div></div>' +
-      '<div class="food-eq">≈ '+showers+' shower'+(showers===1?'':'s')+dayStr+'</div>' +
-      '<div class="food-why">'+f.why+'</div>' +
-      '<div class="food-perkg">Basis: '+f.perKg+'</div>' +
-      note +
-      '<div class="food-cites">'+cites+'</div>' +
-    '</div>';
-  }).join('');
+function setupFilters(){
+  document.querySelectorAll('.chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var cat = chip.dataset.cat;
+      activeCats[cat] = !activeCats[cat];
+      chip.setAttribute('data-on', activeCats[cat] ? 'true' : 'false');
+      applyScale(true);
+    });
+  });
 }
 
 /* =========================================================
@@ -858,17 +840,23 @@ function setupReveal(){
     entries.forEach(function(e){
       if (!e.isIntersecting) return;
       e.target.classList.add('visible');
-      if (e.target.classList.contains('b-row')) animateBreakdownBars(e.target);
-      if (e.target.classList.contains('food-card')) {
-        var fb = e.target.querySelector('.food-bar');
-        if (fb) fb.style.width = fb.dataset.w + '%';
-      }
       io.unobserve(e.target);
     });
-  }, { threshold:0.18, rootMargin:'0px 0px -40px 0px' });
-
+  }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-  document.querySelectorAll('.b-row').forEach(function(el){ io.observe(el); });
+
+  // grow the chart bars the first time the list scrolls into view
+  var listEl = document.getElementById('breakdownList');
+  if (listEl){
+    var io2 = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        applyScale(true);
+        io2.unobserve(e.target);
+      });
+    }, { threshold:0.04 });
+    io2.observe(listEl);
+  }
 }
 
 /* =========================================================
@@ -887,8 +875,8 @@ window.addEventListener('DOMContentLoaded', function(){
   makeDrops();
   heroCounter();
   svgBubbles('heroBubbles', 9, 95, 225, 392);
-  renderBreakdown();
-  renderFoods();
+  renderChart();
+  setupFilters();
   setupReveal();
   applyTwoCol();
   window.addEventListener('resize', applyTwoCol);
