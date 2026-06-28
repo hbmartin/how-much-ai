@@ -388,74 +388,15 @@
 </nav>
 
 <!-- ============ HERO ============ -->
-<header class="bg-hero relative" style="min-height:100vh; display:flex; align-items:center; padding-top:5rem; overflow:hidden;">
+<header class="bg-hero relative" style="display:flex; align-items:center; padding-top:7rem; padding-bottom:8rem; overflow:hidden;">
   <div id="drops"></div>
   <div class="wrap px relative" style="z-index:2; width:100%;">
     <div class="grid gap-10" style="grid-template-columns:1fr; align-items:center;" id="heroGrid">
       <div>
-        <div class="eyebrow" style="margin-bottom:1.4rem;">A Day in Drops</div>
         <h1 class="hero-title">
-          How much <span style="color:var(--aqua)">water</span><br>
-          do you <em style="color:var(--amber)">really</em> use?
+          How much <span style="color:var(--aqua)">water</span> does <span style="color:var(--coral)">AI</span> use?<br /><br />
+           How much do <em style="color:var(--amber)">you</em> really use?
         </h1>
-      </div>
-
-      <!-- Hero water beaker -->
-      <div style="display:flex; justify-content:center;">
-        <svg viewBox="0 0 320 440" style="width:100%; max-width:320px;" aria-label="A measuring beaker filling with water">
-          <defs>
-            <linearGradient id="heroWater" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="rgba(94,234,212,0.85)"/>
-              <stop offset="100%" stop-color="rgba(34,211,238,0.95)"/>
-            </linearGradient>
-            <linearGradient id="heroGlass" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="rgba(94,234,212,0.25)"/>
-              <stop offset="50%" stop-color="rgba(94,234,212,0.04)"/>
-              <stop offset="100%" stop-color="rgba(94,234,212,0.22)"/>
-            </linearGradient>
-            <clipPath id="heroClip">
-              <path d="M70 40 L250 40 L238 380 Q236 400 216 400 L104 400 Q84 400 82 380 Z"/>
-            </clipPath>
-          </defs>
-
-          <!-- glass body -->
-          <path d="M70 40 L250 40 L238 380 Q236 400 216 400 L104 400 Q84 400 82 380 Z"
-                fill="url(#heroGlass)" stroke="rgba(94,234,212,0.5)" stroke-width="2.5"/>
-          <!-- rim -->
-          <ellipse cx="160" cy="40" rx="90" ry="11" fill="rgba(94,234,212,0.12)" stroke="rgba(94,234,212,0.6)" stroke-width="2.5"/>
-
-          <!-- water -->
-          <g clip-path="url(#heroClip)">
-            <rect id="heroWaterRect" x="60" y="150" width="200" height="260" fill="url(#heroWater)"/>
-            <g id="heroWaveGroup" transform="translate(0,150)">
-              <path fill="rgba(94,234,212,0.55)"
-                d="M50 0 Q90 -9 130 0 T210 0 T290 0 L290 14 L50 14 Z">
-                <animate attributeName="d" dur="4s" repeatCount="indefinite"
-                  values="M50 0 Q90 -9 130 0 T210 0 T290 0 L290 14 L50 14 Z;
-                          M50 0 Q90 9 130 0 T210 0 T290 0 L290 14 L50 14 Z;
-                          M50 0 Q90 -9 130 0 T210 0 T290 0 L290 14 L50 14 Z"/>
-              </path>
-            </g>
-            <g id="heroBubbles"></g>
-          </g>
-
-          <!-- graduations -->
-          <g stroke="rgba(255,255,255,0.25)" stroke-width="1.5">
-            <line x1="232" y1="120" x2="248" y2="120"/>
-            <line x1="228" y1="195" x2="244" y2="195"/>
-            <line x1="224" y1="270" x2="240" y2="270"/>
-            <line x1="220" y1="345" x2="236" y2="345"/>
-          </g>
-          <g font-family="Outfit" font-size="11" fill="rgba(255,255,255,0.45)">
-            <text x="186" y="124">100</text>
-            <text x="190" y="199">75</text>
-            <text x="194" y="274">50</text>
-            <text x="198" y="349">25</text>
-          </g>
-
-          <!-- shine -->
-          <path d="M92 60 L100 360" stroke="rgba(255,255,255,0.18)" stroke-width="5" stroke-linecap="round"/>
-        </svg>
       </div>
     </div>
   </div>
@@ -810,23 +751,6 @@ function makeDrops(){
     c.appendChild(d);
   }
 }
-function svgBubbles(groupId, count, xMin, xMax, yBase){
-  var g = document.getElementById(groupId);
-  for (var i=0;i<count;i++){
-    var b = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    var cx = xMin + Math.random()*(xMax-xMin);
-    var r = 1.5 + Math.random()*3;
-    b.setAttribute('cx', cx.toFixed(1));
-    b.setAttribute('cy', yBase);
-    b.setAttribute('r', r.toFixed(1));
-    b.setAttribute('fill','rgba(255,255,255,0.35)');
-    b.setAttribute('stroke','rgba(255,255,255,0.25)');
-    b.setAttribute('stroke-width','0.5');
-    b.style.setProperty('--rise', '-' + (220 + Math.random()*200) + 'px');
-    b.style.animation = 'bubbleUp ' + (4+Math.random()*5).toFixed(1) + 's ease-in ' + (-Math.random()*6).toFixed(1) + 's infinite';
-    g.appendChild(b);
-  }
-}
 
 /* =========================================================
    UNIFIED CHART — render once, rescale on filter
@@ -1018,7 +942,6 @@ function setupReveal(){
    ========================================================= */
 function applyTwoCol(){
   var two = window.matchMedia('(min-width: 900px)').matches;
-  document.getElementById('heroGrid').style.gridTemplateColumns = two ? '1.15fr 0.85fr' : '1fr';
   document.getElementById('footGrid').style.gridTemplateColumns = two ? '1.6fr 1fr' : '1fr';
 }
 
@@ -1027,7 +950,6 @@ function applyTwoCol(){
    ========================================================= */
 window.addEventListener('DOMContentLoaded', function(){
   makeDrops();
-  svgBubbles('heroBubbles', 9, 95, 225, 392);
   renderChart();
   setupFilters();
   setupAiBridge();
