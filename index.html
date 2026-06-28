@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>A Day in Drops — Your Water Footprint at Home</title>
+  <title>How Much Water .AI — Your Water Footprint at Home</title>
   <meta name="description" content="An interactive, animated look at how much water the average American uses at home — the 80–100 gallon-a-day range, fixture by fixture, plus the hidden water in everyday food. Built from USGS, EPA WaterSense and Water Research Foundation data.">
   <link rel="canonical" href="https://howmuchwater.ai/">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -15,8 +15,8 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="A Day in Drops">
-  <meta property="og:title" content="A Day in Drops — Your Water Footprint at Home">
+  <meta property="og:site_name" content="How Much Water .AI">
+  <meta property="og:title" content="How Much Water .AI — Your Water Footprint at Home">
   <meta property="og:description" content="How much water do you really use? An interactive breakdown of indoor water use — fixture by fixture — and the hidden water behind everyday food.">
   <meta property="og:url" content="https://howmuchwater.ai/">
   <meta property="og:image" content="https://howmuchwater.ai/og-image.png">
@@ -24,15 +24,15 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="A Day in Drops — how much water do you really use? 80–100 gallons a day at home.">
+  <meta property="og:image:alt" content="How Much Water .AI — how much water do you really use? 80–100 gallons a day at home.">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="A Day in Drops — Your Water Footprint at Home">
+  <meta name="twitter:title" content="How Much Water .AI — Your Water Footprint at Home">
   <meta name="twitter:description" content="How much water do you really use? An interactive breakdown of indoor water use — fixture by fixture — and the hidden water behind everyday food.">
   <meta name="twitter:image" content="https://howmuchwater.ai/og-image.png">
-  <meta name="twitter:image:alt" content="A Day in Drops — how much water do you really use? 80–100 gallons a day at home.">
+  <meta name="twitter:image:alt" content="How Much Water .AI — how much water do you really use? 80–100 gallons a day at home.">
 
   <!-- Icons & manifest -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -47,8 +47,8 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "A Day in Drops",
-    "alternateName": "A Day in Drops — Your Water Footprint at Home",
+    "name": "How Much Water .AI",
+    "alternateName": "How Much Water .AI — Your Water Footprint at Home",
     "url": "https://howmuchwater.ai/",
     "description": "An interactive, animated look at how much water the average American uses at home — fixture by fixture — and the hidden water behind everyday food.",
     "inLanguage": "en-US",
@@ -278,7 +278,7 @@
   .chip .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
   .chip[data-on="true"].chip-indoor { color: var(--aqua);   border-color: rgba(94,234,212,0.5); background: rgba(94,234,212,0.10); }
   .chip[data-on="true"].chip-food   { color: var(--amber);  border-color: rgba(251,191,36,0.5); background: rgba(251,191,36,0.10); }
-  .chip[data-on="true"].chip-ai     { color: var(--violet); border-color: rgba(167,139,250,0.5); background: rgba(167,139,250,0.10); }
+  .chip[data-on="true"].chip-ai     { color: var(--coral); border-color: rgba(167,139,250,0.5); background: rgba(167,139,250,0.10); }
   .chip[data-on="false"] { opacity: 0.5; }
   .chip[data-on="false"] .dot { background: var(--muted); }
 
@@ -289,7 +289,7 @@
   }
   .cat-indoor { color: var(--aqua);   background: rgba(94,234,212,0.12); }
   .cat-food   { color: var(--amber);  background: rgba(251,191,36,0.12); }
-  .cat-ai     { color: var(--violet); background: rgba(167,139,250,0.12); }
+  .cat-ai     { color: var(--coral); background: rgba(167,139,250,0.12); }
   .b-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
   .b-eq { font-size: 0.74rem; color: var(--aqua); font-weight: 600; margin-top: 0.55rem; }
   .b-row[data-hidden="true"] { display: none; }
@@ -299,14 +299,14 @@
     box-shadow: 0 0 16px rgba(251,113,133,0.22);
     transition: width 1.2s cubic-bezier(.2,.7,.2,1) 0.1s;
   }
-  /* AI rows: violet band + matching low/high labels */
+  /* AI rows: coral band + matching low/high labels */
   .b-row[data-cat="ai"] .range-band {
-    background: linear-gradient(90deg, var(--aqua-bright), var(--violet));
+    background: linear-gradient(90deg, var(--aqua-bright), var(--coral));
     box-shadow: 0 0 16px rgba(167,139,250,0.30);
   }
   .b-row[data-cat="ai"] .b-scale .lo { color: var(--aqua-bright); }
-  .b-row[data-cat="ai"] .b-scale .hi { color: var(--violet); }
-  .b-row[data-cat="ai"] .b-eq { color: var(--violet); }
+  .b-row[data-cat="ai"] .b-scale .hi { color: var(--coral); }
+  .b-row[data-cat="ai"] .b-eq { color: var(--coral); }
 
   /* ---------- Footer ---------- */
   footer { border-top: 1px solid var(--border); }
@@ -335,13 +335,20 @@
     border-color: rgba(167,139,250,0.32);
     background: linear-gradient(140deg, rgba(167,139,250,0.12), rgba(34,211,238,0.05));
   }
-  .bridge-ai .bridge-eq { color: var(--violet); }
+  .bridge-ai .bridge-eq { color: var(--coral); }
   .bridge-note { font-size: 0.85rem; color: var(--slate); max-width: 70ch; margin: 1.1rem auto 0; line-height: 1.55; text-align: center; }
   .bridge-note a { color: var(--violet); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
   .bridge-note a:hover { border-color: var(--violet); }
   /* clickable reference cell in the AI bridge */
-  .ab-pick { position: relative; cursor: pointer; border-radius: 12px; padding: 0.4rem 0.6rem; transition: background 0.2s, box-shadow 0.2s; }
-  .ab-pick:hover { background: rgba(167,139,250,0.10); box-shadow: inset 0 0 0 1px rgba(167,139,250,0.35); }
+  .ab-pick { position: relative; cursor: pointer; border-radius: 12px; padding: 0.4rem 0.6rem; transition: background 0.2s; animation: abPulse 3s ease-in-out infinite; }
+  .ab-pick:hover { background: rgba(167,139,250,0.12); animation-duration: 1.4s; }
+  @keyframes abPulse {
+    0%, 100% { box-shadow: inset 0 0 0 1.5px rgba(167,139,250,0.40), 0 0 8px 0 rgba(167,139,250,0.20); }
+    50%      { box-shadow: inset 0 0 0 1.5px rgba(167,139,250,0.85), 0 0 18px 4px rgba(167,139,250,0.45); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ab-pick { animation: none; box-shadow: inset 0 0 0 1.5px rgba(167,139,250,0.6); }
+  }
   .ab-hint { font-size: 0.62rem; color: var(--violet); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.35rem; opacity: 0.9; }
   .ab-select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; -webkit-appearance: none; appearance: none; }
 
@@ -372,13 +379,8 @@
 <nav class="topnav">
   <div class="wrap px nav-inner">
     <div class="brand">
-      <svg width="26" height="30" viewBox="0 0 24 28" aria-hidden="true">
-        <path d="M12 1 C12 1 4 11 4 17 A 8 8 0 0 0 20 17 C20 11 12 1 12 1 Z" fill="url(#brandGrad)"/>
-        <defs><linearGradient id="brandGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#5eead4"/>
-        </linearGradient></defs>
-      </svg>
-      <span>Drops</span>
+      <img src="icon.png" alt="HowMuchWater.AI" width="30" height="30" style="vertical-align:middle;"/>
+      <span>HowMuchWater.AI</span>
     </div>
     <div class="nav-links">
       <a href="#breakdown">Compare</a>
@@ -417,12 +419,6 @@
   <div class="wrap">
 
     <div class="reveal" style="margin-bottom:3.2rem;">
-      <div class="text-center" style="margin-bottom:1.1rem;">
-        <div class="eyebrow" style="margin-bottom:0.7rem;">Put a gallon in perspective</div>
-        <p class="dim" style="font-size:0.9rem; max-width:40rem; margin:0 auto;">
-          Pick anything — see how many AI prompts hide the same water.
-        </p>
-      </div>
       <div class="bridge bridge-ai glass" id="aiBridge">
         <div class="bridge-cell ab-pick">
           <div class="bridge-emoji" id="abEmoji">🍔</div>
@@ -444,25 +440,14 @@
           <div class="bridge-sub">AI reasoning queries (~150 mL each)</div>
         </div>
       </div>
-      <p class="bridge-note">
-        Per question it's a few drops — but
-        <a href="https://arxiv.org/abs/2304.03271" target="_blank" rel="noopener">training GPT-3 took ≈ 5.4 million litres</a>
-        (about the water to build 370 cars), and ChatGPT now fields a
-        <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">billion-plus questions a day</a>.
-        AI's water cost is tiny per use and enormous in aggregate — and it's drawn from a handful of often
-        water-stressed places where the data centers sit.
-      </p>
     </div>
 
     <div class="reveal text-center" style="margin-bottom:2.2rem;">
-      <div class="eyebrow" style="margin-bottom:1rem;">Side by side</div>
-      <h2 class="section-title">Every gallon,<br><span style="color:var(--aqua)">side by side</span></h2>
+      <h2 class="section-title">Every gallon, <span style="color:var(--aqua)">side by side</span></h2>
       <p class="lead" style="margin:1.4rem auto 0; max-width:46rem;">
-        A flush, a shower, a slice of cheese, a burger, even a question you type to an AI — all on one scale,
-        smallest to largest. Indoor fixtures show an <span style="color:var(--mint)">efficient → wasteful</span>
+        Indoor fixtures show an <span style="color:var(--mint)">efficient → wasteful</span>
         band with the <span style="color:var(--cream)">U.S. average (◆)</span>; food shows the water behind a
-        single serving; an <span style="color:var(--violet)">AI prompt</span> is so small it's a hairline here —
-        <strong>toggle to AI to zoom in.</strong>
+        single serving; an <span style="color:var(--coral)">AI prompt</span> is so small it's a hairline here.
       </p>
       <div class="filters">
         <div class="chip chip-indoor" data-cat="indoor" data-on="true"><span class="dot"></span> Indoor</div>
@@ -477,7 +462,7 @@
       <strong style="color:var(--aqua)">Indoor</strong>: measured per-use averages from the Water Research Foundation's
       <em>Residential End Uses of Water</em> (2016), with efficient/standard rates from EPA WaterSense &amp; ENERGY STAR (REU2016 measured indoor use at 52.1 gal/person/day).
       <strong style="color:var(--amber)">Food</strong>: total green + blue + grey “virtual water” per typical serving, from the Water Footprint Network and Mekonnen &amp; Hoekstra (2011, 2012) — global averages that vary widely by region and method.
-      <strong style="color:var(--violet)">AI</strong>: water evaporated to cool data centers plus the water used to generate their electricity, per query. Operators (OpenAI, Google) disclose on-site cooling only (~0.3 mL); independent estimates add power-plant water (~3–5 mL), and “thinking” models run far higher — from OpenAI (2025), Google (2025), Li et al. 2023 and Jegham et al. 2025. Figures swing widely with each data center's location and grid.
+      <strong style="color:var(--coral)">AI</strong>: water evaporated to cool data centers plus the water used to generate their electricity, per query. Operators (OpenAI, Google) disclose on-site cooling only (~0.3 mL); independent estimates add power-plant water (~3–5 mL), and “thinking” models run far higher — from OpenAI (2025), Google (2025), Li et al. 2023 and Jegham et al. 2025. Figures swing widely with each data center's location and grid.
     </p>
   </div>
 </section>
@@ -491,7 +476,7 @@
           <svg width="26" height="30" viewBox="0 0 24 28" aria-hidden="true">
             <path d="M12 1 C12 1 4 11 4 17 A 8 8 0 0 0 20 17 C20 11 12 1 12 1 Z" fill="#22d3ee"/>
           </svg>
-          <span>A Day in Drops</span>
+          <span>How Much Water .AI</span>
         </div>
         <p class="muted" style="font-size:0.9rem; max-width:34rem;">
           A visual look at the water hidden in everyday life — at the tap, on your plate, and now in the
@@ -550,8 +535,8 @@
       </div>
     </div>
     <div style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; font-size:0.78rem; color:var(--muted);">
-      <span>Built with HTML5, SVG &amp; CSS animation — no frameworks, no build step.</span>
-      <span>Hover a row to explore the daily ranges.</span>
+      <span>&copy; 2026 Harold Martin CC-BY-SA-4.0 license</span>
+      <span><a href="https://github.com/hbmartin/how-much-ai">GitHub</a></span>
     </div>
   </div>
 </footer>
@@ -705,24 +690,20 @@ var items = [
     value:2.1, low:0.25, high:4,
     desc:'Turn the tap off and a brushing uses about a quarter-gallon; leave it running and the same two minutes pours ~4 gallons — close to 8 a day.',
     cites:[ EPASAV ] },
-  { id:'faucet', cat:'indoor', icon:'faucet', name:'Faucet', sub:'~19% of indoor use', basis:'per use',
-    value:0.5, low:0.5, high:1.1, avg:0.5,
-    desc:'One faucet use averages half a gallon — ~30 seconds of flow — but homes open a faucet 50+ times a day. A WaterSense aerator (1.5 gpm) beats the 2.2 gpm standard.',
-    cites:[ WRF, EPAFAU ] },
   { id:'ai_text', cat:'ai', emoji:'💬', name:'AI chatbot question', sub:'ChatGPT · Gemini · Claude', basis:'per text question', unit:'mL',
     value:3, low:0.3, high:5, bandLo:'on-site only', bandHi:'incl. power',
     eqText:'≈ 20,000 questions to equal one shower',
-    desc:'One typical text question to ChatGPT, Gemini or Claude. Operators report ~0.3 mL of on-site cooling water — about five drops; independent estimates that add the water used to generate the electricity put it nearer 3–5 mL. Tiny per question, but multiplied by a billion-plus queries a day.',
+    desc:'One typical text question to ChatGPT, Gemini or Claude. Operators report ~0.3 mL of on-site cooling water (about five drops). Independent estimates that add the water used to generate the electricity put it nearer 3–5 mL.',
     note:'Operator figures (OpenAI, Google) count on-site cooling only; the higher end adds the water used by power plants to make the electricity. Real values swing widely with the data center’s location and grid.',
     cites:[ OPENAI, GOOGLEAI, JEGHAM ] },
   { id:'ai_reason', cat:'ai', emoji:'🧠', name:'AI reasoning query', sub:'o3 · DeepSeek-R1 class', basis:'per “thinking” query', unit:'mL',
     value:150, low:150, high:300, bandLo:'reported', bandHi:'incl. power',
     eqText:'≈ 400 reasoning queries to equal one shower',
-    desc:'A “thinking” model works through a chain of reasoning before answering, running far more computation per reply. Benchmarking finds DeepSeek-R1 alone uses 150+ mL per query — roughly 50× a standard prompt — and counting the electricity’s water footprint pushes the heaviest models (o3) past a full cup.',
+    desc:'A “thinking” model works through a chain of reasoning before answering, running far more computation per reply. Benchmarking finds DeepSeek-R1 alone uses 150+ mL per query (~50× a standard prompt) and counting the electricity’s water footprint pushes the heaviest models (o3) past a full cup.',
     cites:[ JEGHAM ] }
 ];
 function itemById(id){ for (var i=0;i<items.length;i++) if (items[i].id===id) return items[i]; return null; }
-function catVar(cat){ return cat==='food' ? 'amber' : cat==='ai' ? 'violet' : 'aqua'; }
+function catVar(cat){ return cat==='food' ? 'amber' : cat==='ai' ? 'coral' : 'aqua'; }
 
 // AI yardsticks: water per standard text prompt / reasoning prompt (mL)
 var AI_TEXT_ML = 3, AI_REASON_ML = 150;
