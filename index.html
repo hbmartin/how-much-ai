@@ -3,18 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>A Day in Drops — Your Water Footprint at Home</title>
-  <meta name="description" content="An interactive, animated look at how much water the average American uses at home — the 80–100 gallon-a-day range, fixture by fixture. Built from USGS and Water Education Foundation data.">
+  <meta name="description" content="An interactive, animated look at how much water the average American uses at home — the 80–100 gallon-a-day range, fixture by fixture, plus the hidden water in everyday food. Built from USGS, EPA WaterSense and Water Research Foundation data.">
+  <link rel="canonical" href="https://howmuchwater.ai/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Harold Martin">
+  <meta name="keywords" content="water footprint, water usage, household water, gallons per day, indoor water use, virtual water, water conservation, WaterSense, water calculator">
+  <meta name="theme-color" content="#061821">
+  <meta name="color-scheme" content="dark">
 
-  <meta property="og:title" content="A Day in Drops — Your Water Footprint at Home">
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:description" content="How much water do you really use? An interactive HTML5 + SVG breakdown of indoor water use, fixture by fixture.">
+  <meta property="og:site_name" content="A Day in Drops">
+  <meta property="og:title" content="A Day in Drops — Your Water Footprint at Home">
+  <meta property="og:description" content="How much water do you really use? An interactive breakdown of indoor water use — fixture by fixture — and the hidden water behind everyday food.">
+  <meta property="og:url" content="https://howmuchwater.ai/">
+  <meta property="og:image" content="https://howmuchwater.ai/og-image.png">
+  <meta property="og:image:secure_url" content="https://howmuchwater.ai/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A Day in Drops — how much water do you really use? 80–100 gallons a day at home.">
+  <meta property="og:locale" content="en_US">
 
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A Day in Drops — Your Water Footprint at Home">
+  <meta name="twitter:description" content="How much water do you really use? An interactive breakdown of indoor water use — fixture by fixture — and the hidden water behind everyday food.">
+  <meta name="twitter:image" content="https://howmuchwater.ai/og-image.png">
+  <meta name="twitter:image:alt" content="A Day in Drops — how much water do you really use? 80–100 gallons a day at home.">
+
+  <!-- Icons & manifest -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#061821">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "A Day in Drops",
+    "alternateName": "A Day in Drops — Your Water Footprint at Home",
+    "url": "https://howmuchwater.ai/",
+    "description": "An interactive, animated look at how much water the average American uses at home — fixture by fixture — and the hidden water behind everyday food.",
+    "inLanguage": "en-US",
+    "image": "https://howmuchwater.ai/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Harold Martin"
+    },
+    "license": "https://howmuchwater.ai/LICENSE.txt",
+    "citation": [
+      "https://allianceforwaterefficiency.org/resource/residential-end-uses-water-study-1999-and-2016/",
+      "https://water.usgs.gov/edu/activity-percapita.php",
+      "https://www.epa.gov/watersense",
+      "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/"
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +80,7 @@
     --mint: #86efac;
     --amber: #fbbf24;
     --coral: #fb7185;
+    --violet: #a78bfa;
     --cream: #f5f3e7;
     --slate: #9fbac6;
     --muted: #6b94a3;
@@ -224,8 +276,9 @@
   }
   .chip:hover { transform: translateY(-1px); }
   .chip .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
-  .chip[data-on="true"].chip-indoor { color: var(--aqua);  border-color: rgba(94,234,212,0.5); background: rgba(94,234,212,0.10); }
-  .chip[data-on="true"].chip-food   { color: var(--amber); border-color: rgba(251,191,36,0.5); background: rgba(251,191,36,0.10); }
+  .chip[data-on="true"].chip-indoor { color: var(--aqua);   border-color: rgba(94,234,212,0.5); background: rgba(94,234,212,0.10); }
+  .chip[data-on="true"].chip-food   { color: var(--amber);  border-color: rgba(251,191,36,0.5); background: rgba(251,191,36,0.10); }
+  .chip[data-on="true"].chip-ai     { color: var(--violet); border-color: rgba(167,139,250,0.5); background: rgba(167,139,250,0.10); }
   .chip[data-on="false"] { opacity: 0.5; }
   .chip[data-on="false"] .dot { background: var(--muted); }
 
@@ -234,8 +287,9 @@
     font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;
     padding: 0.12rem 0.5rem; border-radius: 999px; margin-left: 0.45rem; vertical-align: middle;
   }
-  .cat-indoor { color: var(--aqua);  background: rgba(94,234,212,0.12); }
-  .cat-food   { color: var(--amber); background: rgba(251,191,36,0.12); }
+  .cat-indoor { color: var(--aqua);   background: rgba(94,234,212,0.12); }
+  .cat-food   { color: var(--amber);  background: rgba(251,191,36,0.12); }
+  .cat-ai     { color: var(--violet); background: rgba(167,139,250,0.12); }
   .b-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
   .b-eq { font-size: 0.74rem; color: var(--aqua); font-weight: 600; margin-top: 0.55rem; }
   .b-row[data-hidden="true"] { display: none; }
@@ -245,6 +299,14 @@
     box-shadow: 0 0 16px rgba(251,113,133,0.22);
     transition: width 1.2s cubic-bezier(.2,.7,.2,1) 0.1s;
   }
+  /* AI rows: violet band + matching low/high labels */
+  .b-row[data-cat="ai"] .range-band {
+    background: linear-gradient(90deg, var(--aqua-bright), var(--violet));
+    box-shadow: 0 0 16px rgba(167,139,250,0.30);
+  }
+  .b-row[data-cat="ai"] .b-scale .lo { color: var(--aqua-bright); }
+  .b-row[data-cat="ai"] .b-scale .hi { color: var(--violet); }
+  .b-row[data-cat="ai"] .b-eq { color: var(--violet); }
 
   /* ---------- Footer ---------- */
   footer { border-top: 1px solid var(--border); }
@@ -269,6 +331,14 @@
   .bridge-big { font-family: 'Fraunces', serif; font-weight: 800; font-size: 1.5rem; margin-top: 0.3rem; }
   .bridge-sub { font-size: 0.74rem; color: var(--muted); margin-top: 0.25rem; }
   .bridge-eq { font-family: 'Fraunces', serif; font-size: 1.7rem; color: var(--amber); font-weight: 700; }
+  .bridge-ai {
+    border-color: rgba(167,139,250,0.32);
+    background: linear-gradient(140deg, rgba(167,139,250,0.12), rgba(34,211,238,0.05));
+  }
+  .bridge-ai .bridge-eq { color: var(--violet); }
+  .bridge-note { font-size: 0.85rem; color: var(--slate); max-width: 70ch; margin: 1.1rem auto 0; line-height: 1.55; text-align: center; }
+  .bridge-note a { color: var(--violet); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .bridge-note a:hover { border-color: var(--violet); }
 
   /* ---------- Icon animations ---------- */
   .stream { stroke-dasharray: 6 9; animation: flow 0.7s linear infinite; }
@@ -428,14 +498,16 @@
       <div class="eyebrow" style="margin-bottom:1rem;">Side by side</div>
       <h2 class="section-title">Every gallon,<br><span style="color:var(--aqua)">side by side</span></h2>
       <p class="lead" style="margin:1.4rem auto 0; max-width:46rem;">
-        A flush, a shower, a slice of cheese, a burger — all on one scale, smallest to largest. Indoor fixtures
-        show an <span style="color:var(--mint)">efficient → wasteful</span> band with the
-        <span style="color:var(--cream)">U.S. average (◆)</span>; food shows the water behind
-        a single serving. <strong>Toggle a category to zoom in.</strong>
+        A flush, a shower, a slice of cheese, a burger, even a question you type to an AI — all on one scale,
+        smallest to largest. Indoor fixtures show an <span style="color:var(--mint)">efficient → wasteful</span>
+        band with the <span style="color:var(--cream)">U.S. average (◆)</span>; food shows the water behind a
+        single serving; an <span style="color:var(--violet)">AI prompt</span> is so small it's a hairline here —
+        <strong>toggle to AI to zoom in.</strong>
       </p>
       <div class="filters">
         <div class="chip chip-indoor" data-cat="indoor" data-on="true"><span class="dot"></span> Indoor</div>
         <div class="chip chip-food"   data-cat="food"   data-on="true"><span class="dot"></span> Food</div>
+        <div class="chip chip-ai"     data-cat="ai"     data-on="true"><span class="dot"></span> AI</div>
       </div>
     </div>
     <div id="chartScaleCap" class="dim text-center" style="font-size:0.78rem; margin-bottom:1rem;"></div>
@@ -462,10 +534,41 @@
       </div>
     </div>
 
+    <div class="reveal" style="margin-top:1.4rem;">
+      <div class="bridge bridge-ai glass">
+        <div class="bridge-cell">
+          <div class="bridge-emoji">🍔</div>
+          <div class="bridge-big">1 burger</div>
+          <div class="bridge-sub">≈ 630 gallons</div>
+        </div>
+        <div class="bridge-eq">=</div>
+        <div class="bridge-cell">
+          <div class="bridge-emoji">💬</div>
+          <div class="bridge-big">~800,000</div>
+          <div class="bridge-sub">standard AI questions (~3 mL each)</div>
+        </div>
+        <div class="bridge-eq">=</div>
+        <div class="bridge-cell">
+          <div class="bridge-emoji">🧠</div>
+          <div class="bridge-big">~16,000</div>
+          <div class="bridge-sub">AI reasoning queries (~150 mL each)</div>
+        </div>
+      </div>
+      <p class="bridge-note">
+        Per question it's a few drops — but
+        <a href="https://arxiv.org/abs/2304.03271" target="_blank" rel="noopener">training GPT-3 took ≈ 5.4 million litres</a>
+        (about the water to build 370 cars), and ChatGPT now fields a
+        <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">billion-plus questions a day</a>.
+        AI's water cost is tiny per use and enormous in aggregate — and it's drawn from a handful of often
+        water-stressed places where the data centers sit.
+      </p>
+    </div>
+
     <p class="reveal text-center dim" style="margin-top:2.2rem; font-size:0.85rem; max-width:66rem; margin-left:auto; margin-right:auto;">
       <strong style="color:var(--aqua)">Indoor</strong>: measured per-use averages from the Water Research Foundation's
       <em>Residential End Uses of Water</em> (2016), with efficient/standard rates from EPA WaterSense &amp; ENERGY STAR (REU2016 measured indoor use at 52.1 gal/person/day).
       <strong style="color:var(--amber)">Food</strong>: total green + blue + grey “virtual water” per typical serving, from the Water Footprint Network and Mekonnen &amp; Hoekstra (2011, 2012) — global averages that vary widely by region and method.
+      <strong style="color:var(--violet)">AI</strong>: water evaporated to cool data centers plus the water used to generate their electricity, per query. Operators (OpenAI, Google) disclose on-site cooling only (~0.3 mL); independent estimates add power-plant water (~3–5 mL), and “thinking” models run far higher — from OpenAI (2025), Google (2025), Li et al. 2023 and Jegham et al. 2025. Figures swing widely with each data center's location and grid.
     </p>
   </div>
 </section>
@@ -482,9 +585,9 @@
           <span>A Day in Drops</span>
         </div>
         <p class="muted" style="font-size:0.9rem; max-width:34rem;">
-          A visual look at indoor household water use in the United States. Every figure here is
-          drawn from public data — the ranges reflect typical values, not any single home. Explore
-          the original sources for the full picture.
+          A visual look at the water hidden in everyday life — at the tap, on your plate, and now in the
+          AI you prompt. Every figure here is drawn from public data; the ranges reflect typical values,
+          not any single home. Explore the original sources for the full picture.
         </p>
       </div>
       <div>
@@ -517,6 +620,22 @@
           <a class="src-link glass" href="https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf" target="_blank" rel="noopener">
             <div class="src-title">Mekonnen &amp; Hoekstra (2011, 2012)</div>
             <div class="src-sub">Peer-reviewed water footprints of crops &amp; animal products</div>
+          </a>
+          <a class="src-link glass" href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">
+            <div class="src-title">OpenAI — Sam Altman (2025)</div>
+            <div class="src-sub">First per-query figure: 0.34 Wh &amp; ~0.32 mL water per ChatGPT prompt</div>
+          </a>
+          <a class="src-link glass" href="https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference" target="_blank" rel="noopener">
+            <div class="src-title">Google — Environmental impact of AI inference (2025)</div>
+            <div class="src-sub">Median Gemini text prompt: 0.24 Wh &amp; 0.26 mL water</div>
+          </a>
+          <a class="src-link glass" href="https://arxiv.org/abs/2505.09598" target="_blank" rel="noopener">
+            <div class="src-title">Jegham et al. (2025) — How Hungry is AI?</div>
+            <div class="src-sub">Per-query energy, water &amp; carbon across 30 LLMs, incl. reasoning models</div>
+          </a>
+          <a class="src-link glass" href="https://arxiv.org/abs/2304.03271" target="_blank" rel="noopener">
+            <div class="src-title">Li et al. (2023) — Making AI Less “Thirsty”</div>
+            <div class="src-sub">Training GPT-3 ≈ 5.4 million litres; the data-center water framework</div>
           </a>
         </div>
       </div>
@@ -597,20 +716,30 @@ var EPATOI = { s:'EPA WaterSense · Residential Toilets', h:'https://www.epa.gov
 var EPASHO = { s:'EPA WaterSense · Showerheads', h:'https://www.epa.gov/watersense/showerheads' };
 var EPAFAU = { s:'EPA WaterSense · Bathroom Faucets', h:'https://www.epa.gov/watersense/bathroom-faucets' };
 var EPASAV = { s:'EPA WaterSense · Start Saving', h:'https://www.epa.gov/watersense/start-saving' };
+var OPENAI = { s:'OpenAI · per-query energy & water (2025)', h:'https://blog.samaltman.com/the-gentle-singularity' };
+var GOOGLEAI = { s:'Google · environmental impact of AI inference (2025)', h:'https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference' };
+var JEGHAM = { s:'Jegham et al. 2025 · How Hungry is AI?', h:'https://arxiv.org/abs/2505.09598' };
+var MAKEAI = { s:'Li et al. 2023 · Making AI Less “Thirsty”', h:'https://arxiv.org/abs/2304.03271' };
 
-var SHOWER_GAL  = 15.8;  // REU2016 average shower — "= N showers" yardstick
-var INDOOR_GPCD = 52.1;  // REU2016 measured indoor use per person per day
+var SHOWER_GAL  = 15.8;    // REU2016 average shower — "= N showers" yardstick
+var INDOOR_GPCD = 52.1;    // REU2016 measured indoor use per person per day
+var ML_PER_GAL  = 3785.41; // mL in a US gallon — converts AI (mL) onto the shared gallon axis
 
 function fmtNum(n){ return n >= 1000 ? n.toLocaleString('en-US') : String(n); }
+// plot value in gallons (the shared axis unit); AI items carry mL and are converted
+function plotVal(it, v){ return it.unit === 'mL' ? v / ML_PER_GAL : v; }
 
 /* =========================================================
    DATA — one bar per item, three categories, one shared scale.
-   cat       = 'indoor' | 'food'
+   cat       = 'indoor' | 'food' | 'ai'
    value     = headline gallons (REU avg for indoor; per serving for food)
    low/high  = efficient -> wasteful band (indoor fixtures)
    avg       = measured U.S. average per event (WRF REU2016) -> diamond marker
    food has a single value (total green+blue+grey footprint), no band.
-   Ordered largest -> smallest value.
+   ai items carry unit:'mL' (value/low/high in millilitres) and a custom
+   eqText line; plotVal() converts them onto the shared gallon axis.
+   bandLo/bandHi relabel the low/high ends (default efficient/wasteful).
+   Render order is computed by ascending plot value (gallons).
    ========================================================= */
 var items = [
   { id:'burger', cat:'food', emoji:'🍔', name:'Beef burger', sub:'beef ≈ 15,400 L/kg', basis:'per 150 g patty',
@@ -670,10 +799,21 @@ var items = [
   { id:'faucet', cat:'indoor', icon:'faucet', name:'Faucet', sub:'~19% of indoor use', basis:'per use',
     value:0.5, low:0.5, high:1.1, avg:0.5,
     desc:'One faucet use averages half a gallon — ~30 seconds of flow — but homes open a faucet 50+ times a day. A WaterSense aerator (1.5 gpm) beats the 2.2 gpm standard.',
-    cites:[ WRF, EPAFAU ] }
+    cites:[ WRF, EPAFAU ] },
+  { id:'ai_text', cat:'ai', emoji:'💬', name:'AI chatbot question', sub:'ChatGPT · Gemini · Claude', basis:'per text question', unit:'mL',
+    value:3, low:0.3, high:5, bandLo:'on-site only', bandHi:'incl. power',
+    eqText:'≈ 20,000 questions to equal one shower',
+    desc:'One typical text question to ChatGPT, Gemini or Claude. Operators report ~0.3 mL of on-site cooling water — about five drops; independent estimates that add the water used to generate the electricity put it nearer 3–5 mL. Tiny per question, but multiplied by a billion-plus queries a day.',
+    note:'Operator figures (OpenAI, Google) count on-site cooling only; the higher end adds the water used by power plants to make the electricity. Real values swing widely with the data center’s location and grid.',
+    cites:[ OPENAI, GOOGLEAI, JEGHAM ] },
+  { id:'ai_reason', cat:'ai', emoji:'🧠', name:'AI reasoning query', sub:'o3 · DeepSeek-R1 class', basis:'per “thinking” query', unit:'mL',
+    value:150, low:150, high:300, bandLo:'reported', bandHi:'incl. power',
+    eqText:'≈ 400 reasoning queries to equal one shower',
+    desc:'A “thinking” model works through a chain of reasoning before answering, running far more computation per reply. Benchmarking finds DeepSeek-R1 alone uses 150+ mL per query — roughly 50× a standard prompt — and counting the electricity’s water footprint pushes the heaviest models (o3) past a full cup.',
+    cites:[ JEGHAM ] }
 ];
 function itemById(id){ for (var i=0;i<items.length;i++) if (items[i].id===id) return items[i]; return null; }
-function catVar(cat){ return cat==='food' ? 'amber' : 'aqua'; }
+function catVar(cat){ return cat==='food' ? 'amber' : cat==='ai' ? 'violet' : 'aqua'; }
 
 /* =========================================================
    HERO — falling drops + bubbles + breathing counter
@@ -722,16 +862,17 @@ function heroCounter(){
 /* =========================================================
    UNIFIED CHART — render once, rescale on filter
    ========================================================= */
-var activeCats = { indoor:true, food:true };
+var activeCats = { indoor:true, food:true, ai:true };
 
 function renderChart(){
   var list = document.getElementById('breakdownList');
-  var ordered = items.slice().sort(function(a,b){ return a.value - b.value; }); // least -> greatest, categories interleaved
+  var ordered = items.slice().sort(function(a,b){ return plotVal(a, a.value) - plotVal(b, b.value); }); // least -> greatest (gallons), categories interleaved
   list.innerHTML = ordered.map(function(it){
     var iconHTML = it.emoji ? ('<span style="font-size:1.7rem; line-height:1;">'+it.emoji+'</span>') : icons[it.icon];
     var hasBand = (it.low != null && it.high != null && it.high > it.low);
     var hasAvg  = (it.avg != null);
     var cvar = catVar(it.cat);
+    var u = it.unit || 'gal';                 // display unit for this row
     var headline = hasAvg ? fmtNum(it.avg)
                  : hasBand ? (fmtNum(it.low)+'<span style="color:var(--muted)">–</span>'+fmtNum(it.high))
                  : fmtNum(it.value);
@@ -744,14 +885,18 @@ function renderChart(){
       var showers = Math.max(1, Math.round(it.value/SHOWER_GAL));
       var days = it.value/INDOOR_GPCD;
       eq = '<div class="b-eq">≈ '+showers+' shower'+(showers===1?'':'s')+(days>=2?(' · ≈ '+Math.round(days)+' days of indoor water'):'')+'</div>';
+    } else if (it.eqText) {
+      eq = '<div class="b-eq">'+it.eqText+'</div>';
     }
     var bars = hasBand
-      ? '<div class="range-base" data-v="'+it.high+'" style="background:var(--'+cvar+')"></div>' +
-        '<div class="range-band" data-lo="'+it.low+'" data-hi="'+it.high+'"></div>' +
-        (hasAvg ? '<div class="range-avg" data-v="'+it.avg+'" title="U.S. average (REU2016): '+fmtNum(it.avg)+' gal"></div>' : '')
-      : '<div class="range-solid" data-v="'+it.value+'"></div>';
+      ? '<div class="range-base" data-v="'+plotVal(it, it.high)+'" style="background:var(--'+cvar+')"></div>' +
+        '<div class="range-band" data-lo="'+plotVal(it, it.low)+'" data-hi="'+plotVal(it, it.high)+'"></div>' +
+        (hasAvg ? '<div class="range-avg" data-v="'+plotVal(it, it.avg)+'" title="U.S. average (REU2016): '+fmtNum(it.avg)+' gal"></div>' : '')
+      : '<div class="range-solid" data-v="'+plotVal(it, it.value)+'"></div>';
+    var loTag = it.bandLo || 'efficient';
+    var hiTag = it.bandHi || 'wasteful';
     var scaleRow = hasBand
-      ? '<div class="b-scale"><span class="lo">'+fmtNum(it.low)+' gal · efficient</span><span class="hi">'+fmtNum(it.high)+' gal · wasteful</span></div>'
+      ? '<div class="b-scale"><span class="lo">'+fmtNum(it.low)+' '+u+' · '+loTag+'</span><span class="hi">'+fmtNum(it.high)+' '+u+' · '+hiTag+'</span></div>'
       : '';
     return '' +
     '<div class="b-row glass reveal" data-id="'+it.id+'" data-cat="'+it.cat+'">' +
@@ -760,7 +905,7 @@ function renderChart(){
         '<div class="b-head">' +
           '<div><div class="b-name">'+it.name+' <span class="cat-tag cat-'+it.cat+'">'+it.cat+'</span></div><div class="b-sub">'+subText+'</div></div>' +
           '<div style="text-align:right">' +
-            '<div class="b-val">'+headline+'<small style="font-size:0.58em; color:var(--muted); font-weight:400; margin-left:0.25em;">gal</small></div>' +
+            '<div class="b-val">'+headline+'<small style="font-size:0.58em; color:var(--muted); font-weight:400; margin-left:0.25em;">'+u+'</small></div>' +
             '<div class="b-unit">'+unitLabel+'</div>' +
           '</div>' +
         '</div>' +
@@ -791,33 +936,43 @@ function chartScale(maxv){
 
 function applyScale(animate){
   var rows = document.querySelectorAll('#breakdownList .b-row');
-  var maxv = 0;
+  var maxv = 0, activeCount = 0;
+  ['indoor','food','ai'].forEach(function(c){ if (activeCats[c]) activeCount++; });
   rows.forEach(function(r){
     var on = activeCats[r.dataset.cat];
     r.setAttribute('data-hidden', on ? 'false' : 'true');
     if (on){
       var it = itemById(r.dataset.id);
-      var ext = (it.high != null) ? it.high : it.value;
+      var ext = plotVal(it, (it.high != null) ? it.high : it.value); // gallons
       if (ext > maxv) maxv = ext;
     }
   });
   var cap = document.getElementById('chartScaleCap');
   if (maxv <= 0){ if (cap) cap.textContent = 'Pick a category to compare.'; return; }
-  var sc = chartScale(maxv);
-  var multi = activeCats.indoor && activeCats.food;
-  if (cap) cap.textContent = 'Shared scale · 0 to ' + fmtNum(sc.max) + ' gallons' + (multi ? ' — toggle one category to zoom in.' : '.');
+
+  // When AI is the only active category, the gallon axis is meaningless — label it in mL instead.
+  var mlOnly   = activeCats.ai && !activeCats.indoor && !activeCats.food;
+  var maxvDisp = mlOnly ? maxv * ML_PER_GAL : maxv;      // pick nice round numbers in the display unit
+  var sc       = chartScale(maxvDisp);
+  var scMaxGal = mlOnly ? sc.max / ML_PER_GAL : sc.max;  // axis max back in gallons (bars always plot in gallons)
+  var multi    = activeCount >= 2;
+  if (cap) cap.textContent = 'Shared scale · 0 to ' + fmtNum(sc.max) + (mlOnly ? ' mL' : ' gallons') + (multi ? ' — toggle one category to zoom in.' : '.');
+
   var gridHTML = sc.lines.map(function(g){ return '<div class="grid-line" style="left:'+((g/sc.max)*100).toFixed(2)+'%"></div>'; }).join('');
+  var MINW = 0.6; // % — a query is microscopic next to a burger; keep AI bars a visible, labelled hairline
   rows.forEach(function(r){
     if (activeCats[r.dataset.cat]) r.classList.add('visible');
     var gw = r.querySelector('.grid-wrap'); if (gw) gw.innerHTML = gridHTML;
+    var isAI = (r.dataset.cat === 'ai');
+    function w(gal){ var p = gal/scMaxGal*100; return (isAI ? Math.max(MINW, p) : p) + '%'; }
     var base = r.querySelector('.range-base');
     var band = r.querySelector('.range-band');
     var avg  = r.querySelector('.range-avg');
     var solid= r.querySelector('.range-solid');
-    if (base)  base.style.width = ((+base.dataset.v)/sc.max*100) + '%';
-    if (band){ band.style.left = ((+band.dataset.lo)/sc.max*100) + '%'; band.style.width = (((+band.dataset.hi)-(+band.dataset.lo))/sc.max*100) + '%'; }
-    if (avg)   avg.style.left = ((+avg.dataset.v)/sc.max*100) + '%';
-    if (solid) solid.style.width = ((+solid.dataset.v)/sc.max*100) + '%';
+    if (base)  base.style.width = w(+base.dataset.v);
+    if (band){ band.style.left = ((+band.dataset.lo)/scMaxGal*100) + '%'; band.style.width = w((+band.dataset.hi)-(+band.dataset.lo)); }
+    if (avg)   avg.style.left = ((+avg.dataset.v)/scMaxGal*100) + '%';
+    if (solid) solid.style.width = w(+solid.dataset.v);
   });
 }
 

@@ -1,0 +1,23 @@
+{
+  "name": "A Day in Drops — Your Water Footprint at Home",
+  "short_name": "Drops",
+  "description": "An interactive, animated breakdown of how much water the average American uses at home — fixture by fixture.",
+  "lang": "en-US",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "/?utm_source=homescreen",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#061821",
+  "theme_color": "#061821",
+  "categories": ["education", "reference", "lifestyle"],
+  "icons": [
+    { "src": "/favicon-16x16.png", "sizes": "16x16", "type": "image/png" },
+    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
